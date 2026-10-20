@@ -1,0 +1,925 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Crisis Room — CARING Shift Simulation</title>
+<link href="https://fonts.googleapis.com/css2?family=Handjet:wght@700..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+<link rel="preload" href="https://cdn.jsdelivr.net/fontsource/fonts/geist-pixel:vf@5.3.1/latin-elsh-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Geist Pixel (single weight 400, variable axis ELSH) - dimuat langsung dari CDN Fontsource/jsDelivr */
+@font-face{font-family:'Geist Pixel';font-style:normal;font-weight:400;font-display:swap;src:url(https://cdn.jsdelivr.net/fontsource/fonts/geist-pixel:vf@5.3.1/latin-elsh-normal.woff2) format('woff2-variations'),url(https://cdn.jsdelivr.net/fontsource/fonts/geist-pixel:vf@5.3.1/latin-elsh-normal.woff2) format('woff2')}
+@property --a{syntax:'<color>';inherits:true;initial-value:#EDE7DC}
+@property --b{syntax:'<color>';inherits:true;initial-value:#EDE7DC}
+@property --c{syntax:'<color>';inherits:true;initial-value:#E3DACB}
+:root{--px:'Handjet','Courier New',monospace;--gf:'Geist Pixel','Courier New',monospace;--bf:var(--gf);--o:#F28A30;--od:#C4631A;--g:#0F6B35;--ink:#1D1B22;--cream:#FFF1E3;--bd:#A9ADD6}
+*{box-sizing:border-box;margin:0}html,body{height:100%}
+body{font:400 15px var(--gf);font-synthesis:style;color:var(--ink);background:linear-gradient(160deg,var(--a),var(--b) 55%,var(--c));transition:--a 1.6s,--b 1.6s,--c 1.6s;display:grid;place-items:center;overflow:hidden}
+.sun{position:fixed;width:min(24vw,260px);aspect-ratio:1;border-radius:50%;background:#FFF4B8;box-shadow:0 0 80px 36px #fff3b0aa;transform:translate(-50%,-50%);transition:left 1.8s,top 1.8s,opacity 1s;opacity:0}
+.card{position:relative;z-index:2;width:min(94vw,1180px);height:min(90vh,680px);background:#F8EEE9;border-radius:28px;border-bottom:6px solid var(--o);--pad:clamp(14px,2.6vw,34px);--hw:45%;padding:var(--pad);display:flex;flex-direction:column;gap:clamp(10px,2vw,22px);box-shadow:0 30px 60px -30px #0005;transition:height .3s ease,width .3s ease}
+.bar{display:flex;align-items:center;gap:14px}
+.lg{width:46px;height:46px;border-radius:14px;border:2px solid var(--g);background:#fff;object-fit:contain;flex:none}
+.ttl{flex:1;font:700 clamp(19px,2.1vw,27px)/1.1 var(--px);letter-spacing:.04em;min-width:0;display:flex;flex-direction:column;justify-content:space-between;min-height:46px;padding:1px 0}
+.trow{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+#t1{font-weight:700}#t2{color:#D9661A;margin-left:12px}
+.ttl.nt{justify-content:center}.ttl.nt .trow{align-items:center}/* tanpa progress bar: judul rata tengah dgn logo */
+.trk{position:relative;height:20px;margin:2px 5px 0 13px;visibility:hidden}
+.trk:before{content:'';position:absolute;left:0;right:0;top:calc(50% - 1.5px);height:3px;border-radius:2px;background:var(--o)}
+.trk u{position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:var(--o);transform:translate(-50%,-50%)}
+.av{position:absolute;z-index:1;top:50%;width:26px;height:26px;border-radius:50%;border:2px solid var(--g);background:#fff;transform:translate(-50%,-50%);transition:left .8s cubic-bezier(.5,1.4,.5,1);object-fit:contain}
+.clk{font:700 clamp(15px,1.9vw,22px)/1.2 var(--bf);letter-spacing:.02em;color:#D9661A;font-style:normal;flex:none}
+.rb{width:46px;height:46px;border-radius:30%;border:0;background:var(--g);display:grid;place-items:center;cursor:pointer;flex:none;transition:transform .15s}
+.rb:active,.nv:active,.go:active{transform:scale(.92)}.rb svg{width:24px;fill:#fff}
+#sp{position:absolute;right:clamp(14px,2.6vw,34px);top:86px;background:#fff;border:3px solid var(--bd);border-radius:16px;padding:14px;display:none;flex-direction:column;gap:12px;z-index:5;font-size:13px}#sp.on{display:flex}
+.stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;overflow-y:auto;padding:2px 3px 12px;scrollbar-width:none;transition:opacity .22s,transform .22s}.stage::-webkit-scrollbar{display:none}
+.stage.out{opacity:0;transform:translateY(10px)}.stage>*{animation:in .5s both}@keyframes in{from{opacity:0;transform:translateY(14px)}}
+.sp{flex:1 0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(14px,3vw,36px)}
+.col{display:flex;flex-direction:column;gap:16px}.col>:first-child{margin-top:auto}.col>:last-child{margin-bottom:auto}.stage>.col{flex:1 0 auto}.col.g{color:var(--g)}.col.g>:first-child{margin-top:0}
+.med{border-radius:18px;overflow:hidden;background:#e7dff5;position:relative;min-height:160px}
+.med img,.med video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;border:3px dashed #a9a3c9;border-radius:18px;color:#6d6896;font:600 13px var(--gf);padding:12px}.ph small{display:block;opacity:.7;margin-top:6px;font-weight:400}
+.bub{background:var(--cream);border:3px solid var(--bd);border-radius:16px;padding:14px 18px;box-shadow:0 6px 0 var(--bd);font-size:clamp(12.5px,1.45vw,16.5px);line-height:1.55}
+.row{display:flex;gap:12px;align-items:center}.row .bub{flex:1}
+.ib{flex:none;width:clamp(58px,8vw,86px);aspect-ratio:1;border:3px solid #E53935;border-radius:16px;background:var(--cream);display:grid;place-items:center;font-size:clamp(28px,4vw,44px);box-shadow:0 6px 0 #f3a39f}
+.in{border:3px solid var(--o);border-radius:99px;padding:13px 20px;font:500 15px var(--gf);background:#fff;outline:0}.in.er{border-color:#E53935;animation:sk .35s}@keyframes sk{30%{transform:translateX(-6px)}60%{transform:translateX(6px)}}
+.go{border:0;border-radius:99px;background:var(--o);color:#fff;font:700 20px var(--px);letter-spacing:.14em;padding:14px 24px;box-shadow:0 5px 0 var(--od);cursor:pointer;transition:transform .15s}
+.nav{display:flex;justify-content:space-between;flex:none;transition:opacity .22s}.nav.out{opacity:0}.nav.off{display:none}
+.nv{width:clamp(48px,6vw,60px);aspect-ratio:1;border-radius:50%;border:0;background:var(--o);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 0 var(--od);transition:.15s}.nv svg{width:55%}.nv.r svg{transform:scaleX(-1)}
+.qg{flex:1 0 auto;display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(14px,3vw,36px)}
+.lf{display:flex;flex-direction:column;gap:12px;min-height:0}.lf .med{flex:1 1 0;min-height:clamp(150px,30vh,300px)}
+.sc{flex:none;font:500 clamp(14px,1.55vw,19px)/1.5 var(--gf)}.rt{display:flex;flex-direction:column;min-height:0}.rt h3{flex:none;font:500 clamp(15px,1.8vw,21px) var(--gf);margin-bottom:12px}
+.opts{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:12px}
+.op{display:flex;align-items:flex-start;background:#fff;border:0;border-radius:12px;padding:16px 18px;font:500 clamp(13px,1.4vw,17px)/1.4 var(--gf);text-align:left;cursor:pointer;transition:.15s;color:var(--ink)}
+.op:nth-child(4n+1),.op:nth-child(4n+4){background:#757575;color:#fff}
+.op:hover{transform:translateY(-2px)}.card .op.sel{background:var(--o);color:#fff;box-shadow:0 4px 0 var(--od);transform:translateY(2px)}
+.rl{border-radius:20px;color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:14px;padding:24px;text-align:center}
+.rl small{font:700 clamp(15px,1.9vw,21px) var(--gf);letter-spacing:.12em}.rl h1{font:900 clamp(36px,5.5vw,68px) var(--px);letter-spacing:.12em;text-indent:.12em;word-break:break-word}
+.bts{display:flex;flex-direction:column;gap:12px;width:min(100%,280px);margin-top:10px}
+/* flash: lingkaran putih membesar dari tengah — hanya transform + opacity (compositor/GPU), jadi tetap mulus walau main-thread lagi sibuk */
+#flash{position:fixed;inset:0;z-index:100;overflow:hidden;opacity:0;pointer-events:none}
+#flash i{position:absolute;inset:0;margin:auto;width:144vmax;height:144vmax;width:calc(hypot(100vw,100vh)*1.04);height:calc(hypot(100vw,100vh)*1.04);border-radius:50%;background:radial-gradient(circle,#fff 0,#fff 60%,#fff9e6 100%);transform:scale(1)}
+#flash.in,#flash.out{pointer-events:auto;will-change:opacity}
+#flash.in{opacity:1}
+#flash.in i{will-change:transform,opacity;animation:flin .5s cubic-bezier(.6,0,.9,.5) forwards}
+#flash.out{animation:flout .95s ease-out forwards}
+@keyframes flin{from{opacity:0;transform:scale(0)}35%{opacity:1}to{opacity:1;transform:scale(1)}}
+@keyframes flout{from{opacity:1}to{opacity:0}}
+/* saat transisi pintu→hasil (layar tertutup putih): matikan transisi berat (gradasi langit, tinggi kartu) supaya tidak repaint/layout tiap frame */
+body.rvl,body.rvl .card{transition:none}
+body.rvl .pf{will-change:transform}
+body.rvr .pf{animation:rvl 1.3s ease-out}
+body.rvr .pf:after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;background:#fff;animation:rvlw 1.3s ease-out both}
+@keyframes rvl{from{transform:scale(1.07)}to{transform:none}}
+@keyframes rvlw{from{opacity:.66}to{opacity:0}}
+.pf{background:transparent}.pf:has(.ph){background:#e7dff5}.pf img{object-fit:cover}
+.med.dr{flex:1}
+.hi{font:700 clamp(28px,3.4vw,42px)/1.15 var(--px);letter-spacing:.02em;color:var(--ink)}
+.unm{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:6;border:0;border-radius:99px;background:#1D1B22d9;color:#fff;font:700 13px var(--bf);letter-spacing:.06em;padding:11px 18px;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px #0006}
+.pf{container-type:inline-size;aspect-ratio:9/16}
+/* kotak nama: semua ukuran dalam cqw (% lebar poster) → proporsi selalu sama di mobile & desktop; nama panjang wrap 2 baris + font menyusut otomatis (fitName) */
+.nmo{position:absolute;top:5%;left:50%;transform:translateX(-50%);background:#fff;border-radius:4cqw;padding:1.5cqw 4.8cqw;text-align:center;z-index:2;width:max-content;max-width:66cqw}
+.nmo small{font:600 2.5cqw/1.2 var(--gf);letter-spacing:.14em;display:block}.nmo b{display:block;font:700 4.8cqw/1.1 var(--px);overflow-wrap:anywhere;text-wrap:balance}
+.mod{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:#ffffff40;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .4s}.mod.on{opacity:1;pointer-events:auto}
+.mw{width:min(88vw,330px);display:flex;flex-direction:column;align-items:center;gap:22px}
+.bub.or{border-color:var(--o);box-shadow:none;text-align:center;position:relative;font-family:var(--gf);font-size:14px;width:100%;transform-origin:88% 100%}
+.bub.or:after{content:'';position:absolute;right:30px;bottom:-12px;border:9px solid transparent;border-top:12px solid var(--o);border-bottom:0}
+/* ===== POPUP CHECKPOINT: chest (back/dome + front/label), icon, stars ===== */
+.chest{position:relative;width:100%;margin-top:96px}
+.cb{position:absolute;inset:0;border-radius:44px 44px 18px 18px;background:linear-gradient(#ffd27a,#f9a24a);transform-origin:50% 100%}
+.cf{position:relative;z-index:3;margin-top:62px;padding:16px;border-radius:18px;background:linear-gradient(#ffb858,#f58a30);box-shadow:0 6px 0 var(--od),inset 0 3px 0 #ffd89a;transform-origin:50% 100%}
+.ic{position:absolute;left:50%;top:-96px;transform:translateX(-50%);width:200px;height:156px;z-index:2;font-size:92px;line-height:1}
+.ico{width:100%;height:100%;display:grid;place-items:center}.ico img,.ico video{max-width:100%;max-height:100%;object-fit:contain}
+.lb{background:var(--cream);border-radius:14px;padding:12px;text-align:center;color:#F5A14A;font:700 clamp(24px,4vw,31px)/1.1 var(--px)}
+.sx{position:absolute;z-index:4;width:var(--s);height:var(--s);display:block}
+.sx svg,.sx img{width:100%;height:100%;display:block;overflow:visible}
+.sx svg path{fill:var(--o);stroke:#fff;stroke-width:2.2;stroke-linejoin:round;paint-order:stroke fill}
+.sx.s1{--s:52px;left:calc(1% - 26px);top:26px;rotate:-14deg}
+.sx.s2{--s:52px;left:calc(72% - 26px);top:-106px;rotate:12deg}
+.sx.s3{--s:48px;left:calc(91% - 24px);top:-46px;rotate:18deg}
+.sx.s4{--s:22px;left:calc(87% - 11px);top:21px;rotate:10deg}
+/* animasi (mulai saat modal .on): label pop -> dome naik -> ikon keluar -> bintang meletup + bubble -> idle ngambang */
+.mod.on .cf{animation:cf .34s cubic-bezier(.3,1.7,.5,1) .26s both}
+.mod.on .cb{animation:lid .36s cubic-bezier(.3,1.5,.5,1) .52s both}
+.mod.on .ico{animation:ir .72s cubic-bezier(.25,.9,.35,1) .76s both,bob 1.9s ease-in-out 1.5s infinite}
+.mod.on .bub.or{animation:bp .42s cubic-bezier(.3,1.6,.5,1) .96s both}
+.mod.on .sx{animation:sp .5s cubic-bezier(.3,1.8,.5,1) calc(var(--d) + 1s) both,tw 1.9s ease-in-out calc(var(--d) + 1.5s) infinite}
+.sx.s1{--d:0s}.sx.s2{--d:.08s}.sx.s3{--d:.16s}.sx.s4{--d:.24s}
+.mod.on #ct{animation:in .45s ease 1.3s both}
+@keyframes cf{from{transform:scale(.4);opacity:0}}
+@keyframes lid{from{transform:scaleY(.05);opacity:0}}
+@keyframes ir{0%{transform:translateY(96px) scale(.55);opacity:0}18%{opacity:1}68%{transform:translateY(-14px) scale(1.05)}100%{transform:none;opacity:1}}
+@keyframes bob{50%{transform:translateY(-5px)}}
+@keyframes bp{from{transform:scale(.2);opacity:0}}
+@keyframes sp{from{transform:scale(0) rotate(-70deg);opacity:0}}
+@keyframes tw{50%{transform:scale(1.14) rotate(9deg)}}
+/* ===== HERO (desktop): foto FULL-BLEED tanpa margin & tanpa crop: lebar kolom = tinggi kartu x rasio foto (--har diisi JS dari ukuran asli foto) ===== */
+@media(min-width:821px){
+.card.split{--hw:min(calc((min(90vh,680px) - 6px)*var(--har,.69)),52%)}
+.card.split .hero{background:#F8EEE9}
+.card.split .hero img,.card.split .hero video{object-fit:contain}
+}
+/* ===== PROTEKSI MEDIA: tidak bisa di-drag / long-press simpan ===== */
+img,video{-webkit-user-drag:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+/* ===== ROTATE PROMPT (HP): video pintu landscape -> minta putar HP dulu, lalu minta putar balik setelah selesai ===== */
+#rot{position:fixed;inset:0;z-index:30;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right));text-align:center;background:rgba(248,238,233,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+#rot.on{display:flex;animation:in .35s both}
+#rot .rph{width:min(30vw,120px);height:auto;flex:none;overflow:visible}
+#rot.land .rph{animation:rotL 2.8s ease-in-out infinite}#rot.port .rph{animation:rotP 2.8s ease-in-out infinite}
+@keyframes rotL{0%,18%{transform:rotate(0)}48%,82%{transform:rotate(-90deg)}100%{transform:rotate(0)}}
+@keyframes rotP{0%,18%{transform:rotate(-90deg)}48%,82%{transform:rotate(0)}100%{transform:rotate(-90deg)}}
+#rot .rtx{display:flex;flex-direction:column;align-items:center;gap:10px}
+#rot h2{font:700 clamp(30px,8.4vw,44px)/1.02 var(--px);color:#D9661A;letter-spacing:.02em}
+#rot p{font:500 clamp(14px,3.8vw,16px)/1.5 var(--gf);max-width:30ch}
+#rot small{font:400 11.5px/1.5 var(--bf);opacity:.7;max-width:36ch}
+#rot .rsk{border:0;background:none;font:600 13px var(--bf);color:var(--g);text-decoration:underline;text-underline-offset:3px;padding:8px 10px;cursor:pointer}
+@media(max-height:480px){#rot{flex-direction:row;gap:28px}#rot .rph{width:76px}#rot h2{font-size:30px}#rot p{font-size:14px;max-width:34ch}}
+@media(prefers-reduced-motion:reduce){#rot .rph{animation:none!important}#rot.land .rph{transform:rotate(-90deg)}}
+/* HP landscape: kartu pintu memenuhi layar, video utuh (tidak di-crop) */
+@media(orientation:landscape) and (max-height:600px){
+.card.dor{width:100vw;height:100vh;height:100dvh;border-radius:0;border-bottom:0;box-shadow:none}
+.card.dor .med.dr video,.card.dor .med.dr img{object-fit:contain}
+.card.dor .nav{left:max(14px,env(safe-area-inset-left,0px));right:max(14px,env(safe-area-inset-right,0px))}
+}
+/* ===== GEMBOK ANIMASI (popup Pintu Terbuka): body + handle dari SVG, loop: kebuka -> kekunci -> kebuka ... ===== */
+.ic.lk{width:192px;height:auto;aspect-ratio:240/302;top:-116px;font-size:0}
+.lkx{display:block;width:100%;height:100%;overflow:visible}
+.lkx .sh,.lkx .bd{animation-duration:3.4s;animation-iteration-count:infinite;animation-fill-mode:both}
+.lkx .sh{animation-name:lkSh;animation-timing-function:ease-in-out}
+.lkx .bd{animation-name:lkBd;animation-timing-function:ease-out}
+.mod:not(.on) .lkx .sh,.mod:not(.on) .lkx .bd{animation:none}
+.mod.on .lkx .sh,.mod.on .lkx .bd{animation-delay:1.15s}
+@keyframes lkSh{
+0%,6%{transform:translate(0,0) rotate(0)}
+20%{transform:translate(-7px,-26px) rotate(0)}
+32%{transform:translate(-7px,-26px) rotate(-13deg)}
+54%{transform:translate(-7px,-26px) rotate(-13deg)}
+64%{transform:translate(-7px,-26px) rotate(0)}
+71%{transform:translate(1px,4px) rotate(0)}
+75%,100%{transform:translate(0,0) rotate(0)}}
+@keyframes lkBd{0%,70%{transform:translate(0,0)}73%{transform:translate(0,3px)}77%{transform:translate(0,-1px)}81%,100%{transform:translate(0,0)}}
+@media(prefers-reduced-motion:reduce){.lkx .sh,.lkx .bd{animation:none!important}.lkx .sh{transform:translate(-7px,-26px) rotate(-13deg)}}
+.sils{display:flex;gap:2px;align-items:flex-end}.sils i{width:26px;height:56px;border:3px solid #111;border-radius:50% 50% 30% 30%}
+/* ===== SPLIT: Ilustrasi 1 & 2 = gambar setengah layar (kiri, full-bleed) ===== */
+.hero{display:none;position:relative;overflow:hidden;background:#e7dff5;transition:opacity .22s}.hero.out{opacity:0}
+.hero img,.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.hero .ph{border-radius:0}
+.bar{transition:opacity .22s}.card.chg .bar{opacity:0}
+.card.split{display:grid;grid-template-columns:var(--hw) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);column-gap:var(--pad);row-gap:clamp(10px,2vw,22px);padding-left:0}
+.card.split .hero{display:block;grid-column:1;grid-row:1/-1;margin:calc(var(--pad)*-1) 0;border-radius:28px 0 0 22px}
+.card.split .bar{grid-column:2;grid-row:1}
+.card.split .stage{grid-column:2;grid-row:2;padding-bottom:84px}
+.card.split .nav{position:absolute;left:var(--pad);right:var(--pad);bottom:var(--pad);z-index:4;pointer-events:none}.card.split .nav .nv{pointer-events:auto}
+/* ===== DOOR: webm pintu FULL LAYAR (tanpa header, seperti Penutup); tombol nav melayang di bawah ===== */
+.card.dor .med.dr{flex:1;align-self:stretch;min-height:0;border-radius:0}
+.card.dor .med.dr video,.card.dor .med.dr img{position:absolute;inset:0;width:100%;height:100%;max-height:none;aspect-ratio:auto}
+.card.dor .nav{position:absolute;left:clamp(14px,2.6vw,34px);right:clamp(14px,2.6vw,34px);bottom:max(clamp(14px,2.6vw,34px),env(safe-area-inset-bottom,0px));z-index:4;pointer-events:none}
+.card.dor .nav .nv{pointer-events:auto}
+/* ===== SKY WINDOW (mobile): siklus siang-malam tampil di header karena background body tertutup kartu ===== */
+.skyw{display:none}
+@media(max-width:820px){.card{--pad:14px;gap:16px;width:100vw;height:100dvh;border-radius:0;padding:max(14px,env(safe-area-inset-top)) 14px max(14px,env(safe-area-inset-bottom))}
+.skyw{display:block;position:absolute;left:0;right:0;top:0;height:calc(max(14px,env(safe-area-inset-top,0px)) + 62px);border-radius:0 0 26px 26px;overflow:hidden;background:linear-gradient(160deg,var(--a),var(--b) 55%,var(--c));pointer-events:none;z-index:0}
+.skyw i{position:absolute;width:58px;aspect-ratio:1;border-radius:50%;background:#FFF4B8;box-shadow:0 0 36px 16px #fff3b0aa;transform:translate(-50%,-50%);transition:left 1.8s,top 1.8s,opacity 1s;opacity:0}
+.bar{position:relative;z-index:1}.clk{font-size:16px}#t2,.clk{color:#6b2d04}.trk:before,.trk u{background:#fff}
+.card.split{display:flex;flex-direction:column;row-gap:16px;padding-left:14px}
+.card.split .bar{order:0}.card.split .hero{order:1;flex:none;height:38dvh;margin:0;border-radius:18px}.stage>.col>:first-child{margin-top:0}.stage>.col>:last-child{margin-bottom:0}
+.card.split .stage{order:2;padding-bottom:12px}.card.split .nav{order:3;position:static;pointer-events:auto}
+.sp,.qg{display:flex;flex-direction:column;flex:none}.sp>*,.qg>*{flex:none}.med{min-height:190px;flex:none}.lf .med{min-height:0;flex:none;aspect-ratio:16/10}.opts{grid-template-columns:1fr;grid-auto-rows:auto}.op:nth-child(n){background:#fff;color:var(--ink)}.op:nth-child(odd){background:#757575;color:#fff}.rb,.lg{width:40px;height:40px}.sun{width:36vw}#t2{display:block;margin:0}.ttl{min-height:58px}.pf{min-height:240px}#sp{top:70px}}
+/* ===== MOBILE: judul (Selamat Datang / Rules / Prolog) sedikit lebih besar + center ===== */
+@media(max-width:820px){
+.card.ttc .ttl{position:relative;justify-content:center;align-items:stretch}
+.card.ttc .trow{justify-content:center}
+.card.ttc .trk{display:none}
+.card.ttc .trow>div:first-child{width:100%;text-align:center}
+.card.ttc #t1{font:700 clamp(22px,6.4vw,28px)/1.1 var(--px);letter-spacing:.04em;display:block}
+.card.ttc .clk{position:absolute;right:0;top:2px;font-size:15px}
+}
+/* ===== PROLOG: teks hitam + tebal; halaman terakhir (Bersiaplah) mengisi ruang kosong ===== */
+.col.g{color:var(--ink)}
+.col.g .bub{font-weight:700}
+.bub.big.lkd{font:900 clamp(30px,4.2vw,50px)/1 var(--px);letter-spacing:.14em;text-indent:.14em;text-align:center;text-wrap:balance}
+.bub.big{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(16px,3vh,28px);text-align:center;padding:clamp(22px,4vh,40px) clamp(18px,3vw,32px);font-weight:700;font-size:clamp(16px,1.9vw,22px);line-height:1.6}
+.sp.fill>.col{min-height:0}
+.col.g.c3 .bub.big{padding:clamp(10px,2vh,22px) clamp(16px,2.4vw,28px);font-size:clamp(14px,1.6vw,19px);line-height:1.5;gap:8px}
+.col.g.c3 .bub.big.lkd{flex:0 0 auto;font-size:clamp(26px,3.4vw,42px);line-height:1}
+@media(max-width:820px){.sp.fill{flex:1 0 auto}.sp.fill>.col{flex:1}
+/* media prolog: kotak ikut ukuran file (utuh, tanpa crop); placeholder tetap 190px */
+.sp.fill>.med{min-height:0}.sp.fill>.med:has(.ph){min-height:190px}}
+/* tombol ganda pada modal konfirmasi */
+.btns{display:flex;flex-direction:column;gap:14px;width:100%}
+.mod.on #ct2{animation:in .45s ease 1.3s both}
+/* ===== KEY IS MISSING: banner warning animasi (lubang kunci -> kunci -> coba masuk -> X -> teks) ===== */
+.warn{--hh:clamp(46px,6.5vw,66px);--hw:calc(var(--hh)*.69);--kw:clamp(64px,10vw,92px);--gp:clamp(8px,1.6vw,16px);--dx:calc(-1*(var(--gp) + var(--hw)*.45));
+display:flex;align-items:center;gap:var(--gp);border:3px solid #E53935;border-radius:14px;padding:10px 14px;background:var(--cream);box-shadow:0 6px 0 #f3a39f;flex:none;animation:wblk 1.1s ease-in-out 4.7s infinite alternate}
+.wh,.wk,.wx{display:block}
+.wh{height:var(--hh);width:var(--hw);flex:none;animation:wpop .45s cubic-bezier(.3,1.7,.5,1) .35s both}
+.whi{width:100%;height:100%;animation:wshk .5s linear 1.95s both}
+.wk{position:relative;height:var(--hh);width:var(--kw);flex:none;animation:wpop .45s cubic-bezier(.3,1.7,.5,1) .95s both}
+.wkk{width:100%;height:100%;animation:wtrv 1.5s cubic-bezier(.4,0,.3,1) 1.55s both}
+.wx{position:absolute;inset:0;margin:auto;width:calc(var(--hh)*1.05);height:calc(var(--hh)*1.05);animation:wxp .4s cubic-bezier(.2,1.6,.4,1) 3.1s both}
+.wh svg,.wh img,.wh video,.wkk svg,.wkk img,.wkk video,.wx svg,.wx img,.wx video{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 2px 0 #0002)}
+.wt{position:relative;flex:1;min-width:0;height:var(--hh);border-radius:10px;overflow:hidden;background:#FFD400;display:grid;place-items:center;animation:wtx .9s steps(1,end) 3.6s both;box-shadow:0 0 0 2px #111 inset}
+.wt:before,.wt:after{content:'';position:absolute;left:-30px;right:-30px;height:24%;background:repeating-linear-gradient(-45deg,#111 0 8px,#FFD400 8px 16px);animation:wcau 1s linear 3.6s infinite}
+.wt:before{top:0}.wt:after{bottom:0}
+.wt b{position:relative;z-index:1;font:400 italic clamp(12px,1.8vw,22px)/1 'Archivo Black','Arial Black',Impact,sans-serif;color:#000;letter-spacing:.03em;text-align:center;white-space:nowrap}
+@keyframes wpop{from{transform:scale(0);opacity:0}}
+@keyframes wtrv{0%{transform:none}28%{transform:translateX(var(--dx))}36%{transform:translateX(var(--dx)) rotate(-8deg)}44%{transform:translateX(var(--dx)) rotate(8deg)}52%{transform:translateX(var(--dx)) rotate(-5deg)}60%,64%{transform:translateX(var(--dx))}90%,100%{transform:none}}
+@keyframes wshk{0%,100%{transform:none}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+@keyframes wxp{from{transform:scale(2.6) rotate(-25deg);opacity:0}}
+@keyframes wtx{0%{opacity:0;transform:scale(.6)}15%{opacity:1;transform:scale(1.07)}30%{opacity:.15}45%{opacity:1}60%{opacity:.25}75%,100%{opacity:1;transform:none}}
+@keyframes wcau{to{transform:translateX(22.627px)}}
+@keyframes wblk{from{border-color:#E53935;box-shadow:0 6px 0 #f3a39f}to{border-color:#ff8a80;box-shadow:0 6px 0 #f3a39f,0 0 18px 4px #e5393577}}
+/* ===== HASIL: judul header lebih besar ===== */
+.card.res #t1{font-size:clamp(19px,5.6vw,24px);font-weight:700;letter-spacing:.05em}
+.nav.wide{justify-content:center}.nav.wide .go{width:min(100%,520px);font-size:clamp(17px,4.8vw,20px);letter-spacing:.07em;white-space:nowrap}
+/* ===== PENUTUP: full layar, tanpa header ===== */
+.card.full{padding:0;gap:0;border-bottom:0;overflow:hidden}
+.card.full .bar,.card.full .skyw{display:none}
+.card.full .stage{position:absolute;inset:0;padding:0;gap:0;overflow:hidden;border-radius:inherit}
+.endp{position:absolute;inset:0}.endp .med{position:absolute;inset:0;min-height:0;border-radius:0}
+.endb{position:absolute;left:0;right:0;bottom:clamp(14px,3.4vh,30px);z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px}
+.endb .go{font:600 clamp(15px,1.8vw,20px) var(--gf);letter-spacing:0;border-radius:22px;padding:18px 28px;width:min(70%,560px);background:#D9702F;box-shadow:0 10px 24px -8px #d9661a99}
+.endb .lnk{border:0;background:none;font:500 clamp(14px,1.5vw,17px) var(--gf);color:#2b2b2b;text-decoration:underline;cursor:pointer;padding:4px 8px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
+/* ===== DROPDOWN VOLUME (tombol speaker) ===== */
+#vp{position:absolute;right:calc(var(--pad) + 60px);top:86px;width:min(250px,calc(100vw - 28px));background:#fff;border:3px solid var(--bd);border-radius:16px;padding:14px;display:none;flex-direction:column;gap:14px;z-index:5;font-size:13px}#vp.on{display:flex}
+#vp label{display:flex;flex-direction:column;gap:6px;font-weight:600;letter-spacing:.04em}
+#vp label span{display:flex;justify-content:space-between;align-items:baseline}
+#vp small{display:block;font-weight:400;opacity:.6;font-size:11px;letter-spacing:0}
+#vp input[type=range]{width:100%;accent-color:var(--o);cursor:pointer;margin:0}
+.mall{display:flex;align-items:center;justify-content:space-between;gap:12px;border:0;background:#f4ece6;border-radius:12px;padding:10px 12px;font:700 13px var(--bf);letter-spacing:.06em;cursor:pointer;color:var(--ink)}
+.mall .sw{width:42px;height:24px;border-radius:99px;background:#c9c3bd;position:relative;transition:.2s;flex:none}
+.mall .sw:after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px #0004}
+.mall.on .sw{background:var(--g)}.mall.on .sw:after{left:21px}
+@media(max-width:820px){#vp{top:70px;right:calc(var(--pad) + 54px)}}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#1D1B22;color:#fff;padding:12px 18px;border-radius:14px;font:500 13px/1.45 var(--bf);opacity:0;pointer-events:none;transition:.3s;z-index:120;max-width:90vw;text-align:center}#toast.on{opacity:1;transform:translateX(-50%)}
+/* ===== TEMA WARNA HASIL: tombol utama = AKSEN ORANGE. Kalau warna karakter bentrok dgn orange (Agility), tombol diganti putih + tombol kedua gelap.
+   --pb/--pbd/--pbt = tombol utama (warna / bayangan / teks)  |  --sb/--sbd/--sbt = tombol kedua (ULANGI) ===== */
+.rl,.card.res{--pb:var(--o);--pbd:var(--od);--pbt:#fff;--sb:#fff;--sbd:#d9cfc4;--sbt:var(--ink)}
+.rl.t-A,.card.res[data-t="A"]{--pb:#fff;--pbd:#8f3a07;--pbt:#B94A0A;--sb:#1D1B22;--sbd:#000;--sbt:#fff}
+.rl .go{background:var(--pb);color:var(--pbt);box-shadow:0 5px 0 var(--pbd)}
+.rl .go.sec{background:var(--sb);color:var(--sbt);box-shadow:0 5px 0 var(--sbd)}
+.rl small,.rl h1{text-shadow:0 2px 0 #0003}
+/* ===== HASIL (desktop, ADAPTIF): kartu mengikuti tinggi layar (--ch); POSTER FULL-BLEED setinggi kartu penuh (atas-bawah, tanpa margin) di kanan;
+   header + tombol lanjut ada di kolom kiri. Lebar poster = tinggi kartu x rasio poster, jadi di layar 16:9 maupun 16:10 poster tetap besar ===== */
+@media(min-width:821px){
+.card.res{--ch:min(97vh,1200px);--pw:min(calc((var(--ch) - 6px)*var(--pr,.5625)),62%);--bh:53px;--gp:clamp(10px,2vw,22px);height:var(--ch);width:min(96vw,calc(var(--ch)*1.75),1560px);transition:height .3s ease,width .3s ease}
+.card.res .bar{position:relative;z-index:3;margin-right:var(--pw)}
+.card.res #vp{right:calc(var(--pw) + var(--pad) + 60px)}
+.card.res .nav{position:absolute;left:var(--pad);right:calc(var(--pw) + var(--pad));bottom:var(--pad);z-index:3;pointer-events:none}.card.res .nav .nv,.card.res .nav .go{pointer-events:auto}
+.card.res .stage{position:absolute;inset:0;padding:0;gap:0;overflow:hidden;border-radius:inherit;container-type:size}
+.sp.rs{flex:none;height:100cqh;display:grid;grid-template-columns:minmax(0,1fr) var(--pw);gap:0}
+.card.res{background:var(--rc,#F8EEE9)}
+.card.res #t1{color:#fff;text-shadow:0 2px 0 #0003}
+.card.res .lg{border-color:#fff}
+.card.res .rb{background:var(--pb);box-shadow:0 4px 0 var(--pbd)}.card.res .rb svg{fill:var(--pbt)}
+.card.res .nav .go{background:var(--pb);color:var(--pbt);box-shadow:0 5px 0 var(--pbd)}
+.sp.rs .rl{background:transparent!important;border-radius:0;margin:calc(var(--pad) + var(--bh) + var(--gp)) 0 calc(var(--pad) + var(--bh) + var(--gp)) var(--pad)}
+.sp.rs .pf{width:100%;height:100%;min-height:0;border-radius:0 28px 22px 0}
+}
+.sdn{position:absolute;left:50%;margin-left:-19px;width:38px;height:38px;border:0;border-radius:50%;background:var(--g);box-shadow:0 4px 0 #0a4a24,0 6px 14px #0004;display:none;place-items:center;cursor:pointer;z-index:3;padding:0}
+.sdn.on{display:grid;animation:sdin .3s both}.sdn svg{width:22px;height:22px;animation:sdb 1.3s ease-in-out infinite}
+@keyframes sdin{from{opacity:0;transform:scale(.6)}}@keyframes sdb{50%{transform:translateY(3px)}}
+/* ===== MOBILE: semua ilustrasi / webm tampil UTUH (tidak di-crop); lebar penuh, tinggi mengikuti rasio file ===== */
+@media(max-width:820px){
+.med:not(.pf){min-height:0;background:transparent}.med:not(.pf):has(.ph){min-height:190px;background:#e7dff5}
+.med:not(.pf) img,.med:not(.pf) video{position:static;inset:auto;width:100%;height:auto;max-height:62dvh;object-fit:contain;display:block;aspect-ratio:auto 16/9}
+.lf .med{aspect-ratio:auto}.lf .med:has(.ph){aspect-ratio:16/10}
+.card.split .hero{height:auto;background:transparent}.card.split .hero:has(.ph){height:38dvh;background:#e7dff5}
+.hero img,.hero video{position:static;inset:auto;width:100%;height:auto;max-height:44dvh;object-fit:contain;display:block;aspect-ratio:auto 16/9}
+.med.dr{display:flex;align-items:center;flex:1 0 auto}
+.endp .med{background:#F8EEE9}.endp .med img,.endp .med video{position:absolute;inset:0;width:100%;height:100%;max-height:none;aspect-ratio:auto}
+}
+@media(max-width:820px){
+.card.split .hero:empty{display:none}
+.med.mh img,.med.mh video{max-height:none}
+
+}
+</style></head><body>
+<div class="sun" id="sun"></div>
+<main class="card" id="card">
+<div class="skyw"><i id="skysun"></i></div><div class="hero" id="hero"></div>
+<header class="bar"><img class="lg" src="logo.png" alt=""><div class="ttl"><div class="trow"><div><b id="t1"></b><span id="t2"></span></div><i class="clk" id="clk"></i></div><div class="trk" id="trk"><u style="left:0%"></u><u style="left:12.5%"></u><u style="left:25%"></u><u style="left:37.5%"></u><u style="left:50%"></u><u style="left:62.5%"></u><u style="left:75%"></u><u style="left:87.5%"></u><u style="left:100%"></u><img class="av" id="av" src="logo.png" alt=""></div></div>
+<button class="rb" id="snd" aria-label="Suara"></button><button class="rb" id="set" aria-label="Pengaturan"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm8.4 5.3a8 8 0 000-3.6l2-1.6-2-3.4-2.4 1a8 8 0 00-3.1-1.8L14.500 2h-4l-.4 2.400A8 8 0 007 6.200l-2.400-1-2 3.400 2 1.600a8 8 0 000 3.600l-2 1.600 2 3.400 2.400-1a8 8 0 003.100 1.800l.4 2.400h4l.4-2.400a8 8 0 003.100-1.800l2.400 1 2-3.400z"/></svg></button></header>
+<div id="sp"><button class="go" id="rs2" style="font-size:16px;padding:10px 14px">ULANGI DARI AWAL</button></div>
+<div id="vp"><button class="mall" id="mall" role="switch" aria-checked="false"><span>MUTE ALL</span><i class="sw"></i></button>
+<label><span>MUSIC VOLUME <b id="mvv"></b></span><small>Musik latar (BGM)</small><input type="range" id="vm" min="0" max="1" step=".05"></label>
+<label><span>MEDIA VOLUME <b id="mdv"></b></span><small>Suara UI + suara video/webm</small><input type="range" id="vd" min="0" max="1" step=".05"></label></div>
+<section class="stage" id="stage"></section>
+<button class="sdn" id="sdn" aria-label="Scroll ke bawah"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l7 7 7-7"/></svg></button>
+<div class="nav off" id="navbar"></div></main>
+<div class="mod" id="mod"><div id="mm"></div></div>
+<div id="rot" role="dialog" aria-live="polite"></div>
+<div id="flash"><i></i></div><div id="toast"></div>
+<script>
+const quizData = [
+  { time:"08:00", step:1, icon:"glitch", illustration:"", eyebrow:"Tantangan 1", title:"Alarm Dimulai",
+    text:"Kamu dan tim sedang menjalankan aktivitas seperti biasa. Tiba-tiba alarm berbunyi dan pintu ruangan terkunci secara otomatis. Situasi menjadi cukup panik dan kamu perlu menentukan langkah pertama. Apa yang paling mungkin kamu lakukan?",
+    options:[
+      { trait:'C', text:"Tetap tenang, memahami situasi, lalu menentukan tindakan untuk menentukan langkah awal." },
+      { trait:'A', text:"Segera mencari tahu penyebabnya dan mencoba menemukan cara tercepat untuk mengatasinya." },
+      { trait:'R', text:"Memastikan rekan-rekan kerja dalam keadaan aman sebelum mengambil tindakan selanjutnya." },
+      { trait:'I', text:"Mengecek situasi berdasarkan prosedur dan memastikan tindakan yang dilakukan sesuai aturan." },
+      { trait:'N', text:"Mengajak rekan-rekan berdiskusi untuk menentukan langkah yang bisa dilakukan bersama." },
+      { trait:'G', text:"Mengajak rekan lain tetap berpikir jernih dalam menghadapi situasi tersebut." }
+    ]},
+  { time:"08:50", step:2, icon:"fileText", illustration:"", eyebrow:"Tantangan 2", title:"Petunjuk Pertama",
+    text:"Kamu menemukan petunjuk yang cukup membingungkan. Setiap anggota tim memiliki pendapat yang berbeda. Pendekatan mana yang paling ingin kamu lakukan?",
+    options:[
+      { trait:'C', text:"Terus berusaha sampai petunjuk berhasil dipahami." },
+      { trait:'A', text:"Mencoba metode baru ketika cara sebelumnya belum berhasil." },
+      { trait:'R', text:"Mendengarkan semua pendapat sebelum mengambil keputusan." },
+      { trait:'I', text:"Menyampaikan pendapat secara jujur meskipun berbeda dengan yang lain." },
+      { trait:'N', text:"Menggabungkan ide terbaik dari seluruh anggota tim." },
+      { trait:'G', text:"Menghargai setiap masukan yang diberikan oleh rekan kerja." }
+    ]},
+  { time:"09:40", step:3, icon:"alertTriangle", illustration:"", eyebrow:"Tantangan 3", title:"Tantangan Sulit",
+    text:"Salah satu petunjuk ternyata jauh lebih sulit daripada yang diperkirakan. Sikap mana yang paling sesuai menurutmu?",
+    options:[
+      { trait:'C', text:"Tidak menyerah sebelum menemukan jawabannya." },
+      { trait:'A', text:"Berani mencoba pendekatan yang berbeda." },
+      { trait:'R', text:"Membantu anggota tim yang mengalami kesulitan agar tetap bisa berkontribusi." },
+      { trait:'I', text:"Tidak menggunakan cara yang melanggar aturan permainan." },
+      { trait:'N', text:"Menggabungkan kekuatan seluruh anggota untuk mencari solusi." },
+      { trait:'G', text:"Tetap berpikir positif bahwa tim dapat melewati tantangan dan mendapatkan petunjuk." }
+    ]},
+  { time:"10:30", step:4, icon:"userMinus", illustration:"", eyebrow:"Tantangan 4", title:"Rekan Membutuhkan Bantuan",
+    text:"Salah satu anggota tim kesulitan memahami petunjuk berikutnya. Apa yang paling mencerminkan dirimu?",
+    options:[
+      { trait:'C', text:"Tetap berkomitmen menyelesaikan tantangan bersama hingga tuntas." },
+      { trait:'A', text:"Menemukan cara baru agar penjelasan lebih mudah dipahami." },
+      { trait:'R', text:"Meluangkan waktu untuk membantu rekan tersebut." },
+      { trait:'I', text:"Memberikan bantuan tanpa mengurangi kejujuran dalam permainan." },
+      { trait:'N', text:"Mengajak anggota lain ikut membantu." },
+      { trait:'G', text:"Mengapresiasi usaha rekan yang terus mencoba." }
+    ]},
+  { time:"11:20", step:5, icon:"compass", illustration:"", eyebrow:"Tantangan 5", title:"Waktu Kritis",
+    text:"Jam kerja hampir usai dan sistem keamanan memberi peringatan bahwa batas waktu semakin menipis. Bagaimana sikapmu menghadapi situasi kritis ini?",
+    options:[
+      { trait:'C', text:"Memacu diri dan bekerja tanpa jeda hingga detik terakhir." },
+      { trait:'A', text:"Segera memutar otak mencari metode pengerjaan yang lebih cepat." },
+      { trait:'R', text:"Mengecek kondisi rekan setim agar tidak ada yang stres atau panik berlebih." },
+      { trait:'I', text:"Tetap konsisten mengikuti langkah penyelesaian yang benar, meski waktu mepet." },
+      { trait:'N', text:"Membagi ulang beban kerja bersama tim agar sisa tugas selesai lebih efisien." },
+      { trait:'G', text:"Tetap tenang dan menghargai progres yang telah dicapai, serta terus berusaha." }
+    ]},
+  { time:"12:30", step:6, icon:"glitch", illustration:"", eyebrow:"Tantangan 6", title:"Rekan yang Kelelahan",
+    text:"Memasuki tantangan keenam, salah satu rekan tim terlihat sangat lelah dan menyerah. Apa reaksimu?",
+    options:[
+      { trait:'C', text:"Memintanya tetap fokus demi target waktu." },
+      { trait:'A', text:"Mengambil alih tugasnya agar progres tetap cepat." },
+      { trait:'R', text:"Memberinya waktu istirahat dan dukungan moral." },
+      { trait:'I', text:"Tetap bekerja sesuai porsi masing-masing secara adil." },
+      { trait:'N', text:"Membagi tugasnya kepada anggota tim yang lain." },
+      { trait:'G', text:"Memberikan apresiasi dan menyemangatinya untuk terus melanjutkan tantangan." }
+    ]},
+  { time:"13:15", step:7, icon:"fileText", illustration:"", eyebrow:"Tantangan 7", title:"Celah Keamanan",
+    text:"Kamu menemukan celah yang bisa membuka pintu lebih cepat tapi melanggar aturan. Apa pilihanmu?",
+    options:[
+      { trait:'C', text:"Mengabaikannya dan tetap fokus pada jalur resmi." },
+      { trait:'A', text:"Mencari alternatif lain yang tetap cepat tanpa melanggar aturan." },
+      { trait:'R', text:"Memastikan cara tersebut aman bagi semua orang." },
+      { trait:'I', text:"Menolak menggunakan celah karena melanggar aturan dan tidak jujur." },
+      { trait:'N', text:"Menanyakan pendapat tim sebelum mengambil risiko." },
+      { trait:'G', text:"Menghargai kesempatan belajar dari tantangan ini dan tetap melanjutkan sesuai aturan." }
+    ]},
+  { time:"14:30", step:8, icon:"alertTriangle", illustration:"", eyebrow:"Tantangan 8", title:"Ruang Ide Darurat",
+    text:"Menjelang sore, tim membutuhkan solusi kreatif untuk membuka salah satu pintu yang macet. Apa kontribusimu?",
+    options:[
+      { trait:'C', text:"Tetap fokus mencari solusi hingga tantangan berhasil diselesaikan." },
+      { trait:'A', text:"Menawarkan ide paling berani meski belum pernah dicoba sebelumnya." },
+      { trait:'R', text:"Mengusulkan solusi yang tetap memperhatikan keselamatan tim." },
+      { trait:'I', text:"Menyampaikan ide secara jujur meski berbeda dari pendapat mayoritas." },
+      { trait:'N', text:"Membuka diskusi agar ide tim bisa disempurnakan bersama." },
+      { trait:'G', text:"Menghargai ide-ide lain yang sudah diusulkan sebelumnya." }
+    ]},
+  { time:"15:45", step:9, icon:"compass", illustration:"", eyebrow:"Tantangan 9", title:"Pintu Terbuka",
+    text:"Setelah berhasil menyelesaikan seluruh tantangan, kamu dan timmu akhirnya menemukan kunci terakhir yang membuka pintu keluar. Sebelum meninggalkan gedung, apa yang akan kamu lakukan?",
+    options:[
+      { trait:'C', text:"Memastikan seluruh tantangan benar-benar selesai sebelum meninggalkan ruangan." },
+      { trait:'A', text:"Langsung keluar untuk menghirup udara segar." },
+      { trait:'R', text:"Menunggu dan memastikan semua rekan sudah keluar." },
+      { trait:'I', text:"Jujur melaporkan kerusakan fasilitas yang tidak disengaja selama tantangan." },
+      { trait:'N', text:"Rayakan bersama dengan seluruh anggota tim." },
+      { trait:'G', text:"Bersyukur atas keberhasilan tim dan berterima kasih atas setiap kontribusi." }
+    ]}
+];
+const characterData = {
+  'C': { name:'Commitment', short:'Komitmen', hex:'#C81E2E', img:'pala-merah.png', emoji:'🎖️', tags:['Bertanggung Jawab','Disiplin'],
+    quote:"Setiap langkah besar dimulai dari komitmen kecil.",
+    desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Commitment : Pribadi yang memiliki komitmen tinggi terhadap tujuan dan bertanggung jawab untuk menuntaskan setiap tantangan. Dengan ketekunan dan konsistensimu, kamu mampu menjaga tim tetap fokus hingga mencapai hasil terbaik.',
+    toast:'Dicatat — kelar, nggak ada yang digantung.' },
+  'A': { name:'Agility', short:'Kelincahan', hex:'#E8681A', img:'Kuning.png', emoji:'⚡', tags:['Cepat','Adaptif'],
+    quote:"Kelincahan bukan hanya soal kecepatan, namun juga soal ketepatan.",
+    desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Ace Agility: Pribadi yang mampu beradaptasi dengan cepat terhadap perubahan dan berani mencari solusi baru saat menghadapi tantangan. Dengan pola pikir yang fleksibel dan responsif, kamu mampu membantu tim menemukan cara terbaik untuk mencapai tujuan.',
+    toast:'Dicatat — solusi alternatif langsung gas.' },
+  'R': { name:'Care', short:'Kepedulian', hex:'#D6247E', img:'Pink.png', emoji:'🤗', tags:['Empati','Kekeluargaan'],
+    quote:"Kepedulian yang tulus membentuk ruang dimana semua orang dapat tumbuh.",
+    desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Rose Care: Pribadi yang peduli terhadap orang lain dan selalu siap memberikan perhatian serta dukungan kepada anggota tim. Dengan empati dan kepedulianmu, kamu menciptakan suasana kerja sama yang nyaman sehingga tim dapat menghadapi setiap tantangan bersama.',
+    toast:'Dicatat — tim ngerasa diperhatiin.' },
+  'I': { name:'Integrity', short:'Integritas', hex:'#2360B4', img:'Biru.png', emoji:'⚖️', tags:['Kepercayaan','Adil'],
+    quote:"Kejujuran adalah pondasi dari segalanya.",
+    desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Indy Integrity: Pribadi yang menjunjung tinggi kejujuran, tanggung jawab, dan konsistensi dalam setiap tindakan. Dengan berpegang teguh pada prinsip yang benar, kamu menjadi sosok yang dapat dipercaya dan membantu tim menyelesaikan tantangan dengan cara yang tepat.',
+    toast:'Dicatat — sesuai jalur, aman ditelusuri.' },
+  'N': { name:'Collaboration', short:'Kolaborasi', hex:'#7B3AA0', img:'Ungu.png', emoji:'🤝', tags:['Kerja Tim','Kompak'],
+    quote:"Bersama, kita bisa melakukan segalanya.",
+    desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Nikola & Bora Collaboration: Pribadi yang percaya bahwa keberhasilan terbaik dicapai melalui kerja sama. Dengan kemampuanmu membangun komunikasi, saling mendukung, dan menyatukan kekuatan setiap anggota, kamu mampu membawa tim mencapai tujuan bersama.',
+    toast:'Dicatat — kelar bareng-bareng.' },
+  'G': { name:'Gratitude', short:'Rasa Syukur', hex:'#188A4C', img:'Ijo.png', emoji:'🙏', tags:['Positif','Welas Asih'],
+    quote:"Semakin kita bersyukur, semakin kita tumbuh.",
+    desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Gibi Gratitude : Pribadi yang selalu menghargai setiap proses, usaha, dan kontribusi orang lain. Dengan sikap positif dan rasa syukur yang kamu tunjukkan, kamu mampu membangun semangat, mempererat hubungan dalam tim, serta menciptakan lingkungan yang saling menghargai.',
+    toast:'Dicatat — suasana tetap adem.' }
+};
+const $=i=>document.getElementById(i),TR=['C','A','R','I','N','G'];
+/* =====================================================================
+   PLACEHOLDER ILUSTRASI / GIF / WEBM
+   Taro URL atau path file di dalam tanda kutip '' tiap baris.
+   Contoh: intro:'img/intro.gif'
+   Format: .jpg .png .webp .gif .webm .mp4 (webm/mp4 otomatis autoplay+loop, SUARA VIDEO IKUT NYALA; khusus MEDIA.door: tanpa loop, selesai → kilatan putih → otomatis ke hasil)
+   Kosong ('') = tampil kotak putus-putus bertuliskan nomor ilustrasinya.
+   ===================================================================== */
+const MEDIA={
+  intro:'gifDisclaimer.gif', // ILUSTRASI 1  | Intro            | .jpg/.gif/.webm | taro URL disini
+  rules:'gifProlog.gif', // ILUSTRASI 2  | Rules            | .jpg/.gif/.webm | taro URL disini
+  p0:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 1 Cut.webm',    // ILUSTRASI 3  | Prolog 1         | .jpg/.gif/.webm | taro URL disini
+  p1:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 2 Cut.webm',    // ILUSTRASI 4  | Prolog 2 - hal. 1 (1 bubble teks) | .jpg/.gif/.webm | taro URL disini
+  p2:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 3 Cut.webm',    // ILUSTRASI 5  | Prolog 2 - hal. 2 (2 bubble atas-bawah + KEY) | .jpg/.gif/.webm | taro URL disini
+  p3:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 4 Revisi.webm',    // ILUSTRASI 6  | Prolog 3         | .jpg/.gif/.webm | taro URL disini
+  q0:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (1).webm',    // ILUSTRASI 7  | Tantangan 1      | .jpg/.gif/.webm | taro URL disini
+  q1:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (2).webm',    // ILUSTRASI 8  | Tantangan 2      | .jpg/.gif/.webm | taro URL disini
+  q2:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (3).webm',    // ILUSTRASI 9  | Tantangan 3      | .jpg/.gif/.webm | taro URL disini
+  q3:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Soal 4 Revisi (Sfx).webm',    // ILUSTRASI 10 | Tantangan 4      | .jpg/.gif/.webm | taro URL disini
+  q4:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (5).webm',    // ILUSTRASI 11 | Tantangan 5      | .jpg/.gif/.webm | taro URL disini
+  q5:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (6).webm',    // ILUSTRASI 12 | Tantangan 6      | .jpg/.gif/.webm | taro URL disini
+  q6:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (7).webm',    // ILUSTRASI 13 | Tantangan 7      | .jpg/.gif/.webm | taro URL disini
+  q7:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Soal 8 Revisi.webm',    // ILUSTRASI 14 | Tantangan 8      | .jpg/.gif/.webm | taro URL disini
+  q8:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (9).webm',    // ILUSTRASI 15 | Tantangan 9      | .jpg/.gif/.webm | taro URL disini
+  door:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Key Motion Revisi.webm',   // ILUSTRASI 16 | Halaman pintu (setelah Tantangan 9) | taro URL disini
+  end:'',   // ILUSTRASI 17 | Halaman PENUTUP (full layar; ilustrasi 'Terima Kasih' + kontak) | .jpg/.png/.webp/.gif/.webm
+  // --- IKON MODAL CHECKPOINT (kosong = pakai emoji bawaan) ---
+  c0:'',    // IKON MODAL 1 | setelah Tantangan 1 | .png/.gif/.webm | taro URL disini
+  c1:'',    // IKON MODAL 2 | setelah Tantangan 2 | taro URL disini
+  c2:'',    // IKON MODAL 3 | setelah Tantangan 3 | taro URL disini
+  c3:'',    // IKON MODAL 4 | setelah Tantangan 4 | taro URL disini
+  c4:'',    // IKON MODAL 5 | setelah Tantangan 5 | taro URL disini
+  c5:'',    // IKON MODAL 6 | setelah Tantangan 6 | taro URL disini
+  c6:'',    // IKON MODAL 7 | setelah Tantangan 7 | taro URL disini
+  c7:'',    // IKON MODAL 8 | setelah Tantangan 8 | taro URL disini
+  c8:''     // IKON MODAL 9 | modal terakhir (kosong = 6 siluet maskot) | taro URL disini
+};
+const KEYS=Object.keys(MEDIA);
+/* =====================================================================
+   POSTER HASIL (6 desain maskot C.A.R.I.N.G — tampil di halaman Hasil sesuai karakter dominan)
+   Rasio ~9:16 (portrait). Format: .png .jpg .webp (jangan GIF). Nama peserta otomatis ditaruh di kotak putih atas poster.
+   Kosong ('') = tampil kotak placeholder bertuliskan nomor posternya.
+   ===================================================================== */
+const POSTER={
+  C:'bgmerah.gif', // POSTER 1 | Commitment    | taro URL disini
+  A:'bgkuning.gif', // POSTER 2 | Agility       | taro URL disini
+  R:'bgpink.gif', // POSTER 3 | Care          | taro URL disini
+  I:'bgbiru.gif', // POSTER 4 | Integrity     | taro URL disini
+  N:'bgungu.gif', // POSTER 5 | Collaboration | taro URL disini
+  G:'bghijau.gif'  // POSTER 6 | Gratitude     | taro URL disini
+};
+/* =====================================================================
+   ASET ANIMASI "KEY IS MISSING!" (Prolog 2 hal. 2)
+   Urutan animasi: lubang kunci muncul -> kunci muncul -> kunci mencoba masuk
+   ke lubang (nggak cocok) -> tanda X muncul di atas kunci -> teks KEY IS MISSING.
+   Taro URL png/gif/webm/svg di dalam tanda kutip. Kosong ('') = pakai placeholder SVG bawaan.
+   ===================================================================== */
+const KEYMEDIA={
+  hole:'', // ASET 1 | lubang kunci (rasio ~ 11:16, portrait)
+  key:'',  // ASET 2 | kunci (ujung gigi di KIRI, cincin di KANAN; rasio ~ 2:1)
+  x:''     // ASET 3 | tanda X merah (rasio 1:1, transparan)
+};
+const KSVG={
+hole:'<svg viewBox="0 0 44 64"><defs><linearGradient id="kg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f4f8"/><stop offset="1" stop-color="#8f93a3"/></linearGradient></defs><rect width="44" height="64" rx="4" fill="#2a37d1"/><rect x="9" y="6" width="30" height="52" rx="15" fill="url(#kg1)"/><circle cx="24" cy="26" r="6.5" fill="#1d1b22"/><path d="M20.500 30h7l2.500 17h-12z" fill="#1d1b22"/></svg>',
+key:'<svg viewBox="0 0 100 50"><defs><linearGradient id="kg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#d9892b"/></linearGradient></defs><circle cx="78" cy="25" r="17" fill="url(#kg2)" stroke="#a8631a" stroke-width="3"/><circle cx="78" cy="25" r="7" fill="#fff1e3" stroke="#a8631a" stroke-width="2"/><rect x="6" y="21" width="58" height="8" rx="3" fill="url(#kg2)" stroke="#a8631a" stroke-width="3"/><path d="M12 29v9h7v-9zM26 29v7h6v-7z" fill="url(#kg2)" stroke="#a8631a" stroke-width="2.500" stroke-linejoin="round"/></svg>',
+x:'<svg viewBox="0 0 60 60"><path d="M10 10L50 50M50 10L10 50" stroke="#fff" stroke-width="16" stroke-linecap="round"/><path d="M10 10L50 50M50 10L10 50" stroke="#E53935" stroke-width="11" stroke-linecap="round"/></svg>'};
+const ka=k=>{const s=KEYMEDIA[k];return !s?KSVG[k]:/\.(webm|mp4)(\?|$)/i.test(s)?`<video src="${s}" autoplay loop muted playsinline></video>`:`<img src="${s}" alt="">`};
+const warnHTML=()=>`<div class="warn"><div class="wh"><div class="whi">${ka('hole')}</div></div><div class="wk"><div class="wkk">${ka('key')}</div><div class="wx">${ka('x')}</div></div><div class="wt"><b>KEY IS MISSING!</b></div></div>`;
+/* =====================================================================
+   DECODER GIF → PNG (frame TERAKHIR), vanilla JS murni, tanpa library luar.
+   Dipakai supaya hasil download poster selalu berupa gambar STATIS (bukan
+   GIF yang jalan terus), dan supaya ambil pixel-nya tidak kena blokir
+   "tainted canvas" seperti kalau diambil langsung dari elemen <img>.
+   decodeGifLastFrame(buffer) -> {width, height, data:Uint8ClampedArray RGBA}
+   ===================================================================== */
+function lzwDecode(minCodeSize,bytes,pixelCount){
+  let pos=0;
+  const readCode=size=>{let code=0;for(let i=0;i<size;i++){if(bytes[pos>>3]&(1<<(pos&7)))code|=1<<i;pos++}return code};
+  const clearCode=1<<minCodeSize,endCode=clearCode+1;
+  let codeSize=minCodeSize+1,dict=[];
+  const clear=()=>{dict=[];for(let i=0;i<clearCode;i++)dict[i]=[i];dict[clearCode]=[];dict[endCode]=null;codeSize=minCodeSize+1};
+  clear();
+  const out=[];let code,last;
+  while(out.length<pixelCount){
+    last=code;code=readCode(codeSize);
+    if(code===clearCode){clear();continue}
+    if(code===endCode)break;
+    if(code<dict.length){if(last!==clearCode&&last!==undefined)dict.push(dict[last].concat(dict[code][0]))}
+    else{if(last===undefined)break;dict.push(dict[last].concat(dict[last][0]))}
+    out.push.apply(out,dict[code]);
+    if(dict.length===(1<<codeSize)&&codeSize<12)codeSize++;
+  }
+  return out;
+}
+function deinterlaceGif(idx,w,h){
+  const out=new Array(w*h),passes=[[0,8],[4,8],[2,4],[1,2]];let srcRow=0;
+  for(const[start,step] of passes)for(let y=start;y<h;y+=step){for(let x=0;x<w;x++)out[y*w+x]=idx[srcRow*w+x];srcRow++}
+  return out;
+}
+function decodeGifLastFrame(buf){
+  const d=new Uint8Array(buf);let p=6;
+  const u8=()=>d[p++],u16=()=>{const v=d[p]|(d[p+1]<<8);p+=2;return v};
+  if(String.fromCharCode(d[0],d[1],d[2])!=='GIF')throw new Error('bukan file GIF');
+  const W=u16(),H=u16(),pk=u8();u8();u8();
+  let gct=null;
+  if(pk&0x80){gct=[];const n=1<<((pk&7)+1);for(let i=0;i<n;i++){gct.push([d[p],d[p+1],d[p+2]]);p+=3}}
+  const canvasBuf=new Uint8ClampedArray(W*H*4);
+  const clearRect=r=>{for(let y=0;y<r.height;y++)for(let x=0;x<r.width;x++){const o=((r.top+y)*W+(r.left+x))*4;canvasBuf[o]=canvasBuf[o+1]=canvasBuf[o+2]=canvasBuf[o+3]=0}};
+  const getRect=r=>{const out=new Uint8ClampedArray(r.width*r.height*4);for(let y=0;y<r.height;y++)for(let x=0;x<r.width;x++){const o=((r.top+y)*W+(r.left+x))*4,o2=(y*r.width+x)*4;for(let i=0;i<4;i++)out[o2+i]=canvasBuf[o+i]}return out};
+  const putRect=(r,src)=>{for(let y=0;y<r.height;y++)for(let x=0;x<r.width;x++){const o=((r.top+y)*W+(r.left+x))*4,o2=(y*r.width+x)*4;for(let i=0;i<4;i++)canvasBuf[o+i]=src[o2+i]}};
+  let gceDisposal=0,gceTransparent=-1,haveGCE=false,prevRect=null,prevDisposal=0,savedRegion=null;
+  const skipSub=()=>{let n;while((n=u8())!==0)p+=n};
+  while(p<d.length){
+    const sep=u8();
+    if(sep===0x3B)break;
+    if(sep===0x21){
+      const label=u8();
+      if(label===0xF9){u8();const fl=u8();gceDisposal=(fl>>2)&7;const hasT=fl&1;u16();const ti=u8();u8();gceTransparent=hasT?ti:-1;haveGCE=true}
+      else skipSub();
+      continue;
+    }
+    if(sep===0x2C){
+      const left=u16(),top=u16(),iw=u16(),ih=u16(),ipk=u8();
+      const interlace=!!(ipk&0x40);
+      let lct=null;
+      if(ipk&0x80){lct=[];const n=1<<((ipk&7)+1);for(let i=0;i<n;i++){lct.push([d[p],d[p+1],d[p+2]]);p+=3}}
+      const ct=lct||gct||[[0,0,0]];
+      const minCode=u8();
+      const bytes=[];{let n;while((n=u8())!==0){for(let i=0;i<n;i++)bytes.push(d[p+i]);p+=n}}
+      const idx=lzwDecode(minCode,bytes,iw*ih);
+      const px=interlace?deinterlaceGif(idx,iw,ih):idx;
+      if(prevRect){if(prevDisposal===2)clearRect(prevRect);else if(prevDisposal===3&&savedRegion)putRect(prevRect,savedRegion)}
+      const thisDisposal=haveGCE?gceDisposal:0;
+      savedRegion=thisDisposal===3?getRect({left,top,width:iw,height:ih}):null;
+      const trans=haveGCE?gceTransparent:-1;
+      for(let y=0;y<ih;y++)for(let x=0;x<iw;x++){
+        const colIdx=px[y*iw+x];if(colIdx===trans)continue;
+        const c=ct[colIdx]||[0,0,0],dx=left+x,dy=top+y;if(dx<0||dy<0||dx>=W||dy>=H)continue;
+        const o=(dy*W+dx)*4;canvasBuf[o]=c[0];canvasBuf[o+1]=c[1];canvasBuf[o+2]=c[2];canvasBuf[o+3]=255;
+      }
+      prevRect={left,top,width:iw,height:ih};prevDisposal=thisDisposal;haveGCE=false;gceTransparent=-1;gceDisposal=0;
+      continue;
+    }
+    break;
+  }
+  return {width:W,height:H,data:canvasBuf};
+}
+/* =====================================================================
+   PLACEHOLDER SOUND (BGM per halaman, loop otomatis, bisa di-mute)
+   Taro URL atau path file di dalam tanda kutip '' tiap baris.
+   Contoh: intro:'audio/intro.mp3'     Format: .mp3 .ogg .wav
+   Kosong ('') = halaman itu tanpa suara.
+   ===================================================================== */
+const SND={
+  intro:'asset/Personality Quiz/Sound/Adventure_Pending.mp3', // SOUND 1  | BGM Intro + Rules (SATU lagu untuk 2 halaman, lanjut tanpa putus/restart) | .mp3/.ogg | taro URL disini
+  p0:'',    // SOUND 3  | BGM Prolog 1     | taro URL disini
+  p1:'',    // SOUND 4  | BGM Prolog 2 hal. 1 | taro URL disini
+  p2:'',    // SOUND 5  | BGM Prolog 2 hal. 2 | taro URL disini
+  p3:'',    // SOUND 6  | BGM Prolog 3     | taro URL disini
+  q0:'',    // SOUND 7  | BGM Tantangan 1  | taro URL disini
+  q1:'',    // SOUND 8  | BGM Tantangan 2  | taro URL disini
+  q2:'',    // SOUND 9  | BGM Tantangan 3  | taro URL disini
+  q3:'',    // SOUND 10 | BGM Tantangan 4  | taro URL disini
+  q4:'',    // SOUND 11 | BGM Tantangan 5  | taro URL disini
+  q5:'',    // SOUND 12 | BGM Tantangan 6  | taro URL disini
+  q6:'',    // SOUND 13 | BGM Tantangan 7  | taro URL disini
+  q7:'',    // SOUND 14 | BGM Tantangan 8  | taro URL disini
+  q8:'',    // SOUND 15 | BGM Tantangan 9  | taro URL disini
+  door:'',  // SOUND 16 | BGM Halaman pintu | taro URL disini
+  res:'',   // SOUND 17 | BGM Halaman Hasil | taro URL disini
+  end:'',   // SOUND 17b | BGM Halaman Penutup | taro URL disini
+  cp:'',    // SOUND 18 | SFX modal checkpoint (bunyi sekali tiap modal muncul) | taro URL disini
+  click:'', // SOUND 19 | SFX klik tombol | taro URL disini (kosong = bunyi sintetis bawaan)
+  hover:'', // SOUND 20 | SFX hover tombol/opsi | kosong = bunyi sintetis bawaan
+  sel:'',   // SOUND 21 | SFX pilih opsi jawaban | kosong = bunyi sintetis bawaan
+  next:'',  // SOUND 22 | SFX tombol lanjut | kosong = bunyi sintetis bawaan
+  back:'',  // SOUND 23 | SFX tombol kembali | kosong = bunyi sintetis bawaan
+  err:'',   // SOUND 24 | SFX gagal (nama kosong / belum pilih jawaban) | kosong = bunyi sintetis bawaan
+  flash:''  // SOUND 25 | SFX kilatan putih setelah pintu terbuka | kosong = bunyi sintetis bawaan
+};
+/* =====================================================================
+   POPUP CHECKPOINT (modal peti + ikon + bintang, animasi ala popupaftersoal.gif)
+   POPUPS_ON : true/false = saklar utama (false = SEMUA popup mati)
+   Tiap halaman navigasi punya satu entri. Ubah  show:true/false  untuk
+   menampilkan / menyembunyikan popup SETELAH halaman itu (saat klik lanjut).
+   Key halaman: intro, rules, p0-p3 (prolog), q0-q8 (tantangan), door
+   title/text = isi popup | icon = emoji cadangan | img = URL png/gif/webm ikon
+   (kosong = pakai emoji; untuk q0-q7 & door, MEDIA.c0-c8 di atas juga tetap berlaku)
+   btn = teks tombol (opsional) | sils:true = 6 siluet maskot sebagai ikon
+   ===================================================================== */
+const POPUPS_ON=true;
+const STAR_IMG='';   // BINTANG: kosong = pakai bintang SVG bawaan. Taro URL png bintang kamu di sini kalau mau ganti.
+const POPUP={
+  intro:{show:false,title:'Shift Dimulai',text:'Selamat datang! Shift pertamamu segera dimulai.',icon:'🚀',img:''},
+  rules:{show:false,title:'Aturan Dipahami',text:'Kamu sudah tahu aturannya. Saatnya masuk ke gedung!',icon:'📋',img:''},
+  p0:{show:false,title:'Pagi di Kantor',text:'Hari kerja dimulai seperti biasa.',icon:'☀️',img:''},
+  p1:{show:false,title:'Mode Uji Coba',text:'Semua pintu terkunci otomatis!',icon:'🔒',img:''},
+  p2:{show:false,title:'Pesan Misterius',text:'Selesaikan 9 tantangan untuk menemukan kunci terakhir.',icon:'✉️',img:''},
+  p3:{show:true,title:'Apakah Kamu Sudah Siap?',text:'Setelah ini kamu akan masuk ke 9 tantangan. Pastikan kamu sudah siap ya!',icon:'⚡',img:'',btn:'SIAP DONG!',btn2:'BELUM SIAP'},
+  q0:{show:true,title:'Tantangan 1 Terlewati',text:'Kamu berhasil mengambil langkah pertama di tengah situasi penuh tekanan. Tapi perjalanan belum selesai… Sebuah petunjuk baru menunggu untuk dipecahkan!',icon:'🔍',img:''},
+  q1:{show:false,title:'Petunjuk Terbaca',text:'Petunjuk pertama berhasil kamu pecahkan. Tim mulai bergerak searah!',icon:'🧩',img:''},
+  q2:{show:false,title:'Kunci Pertama!',text:'Tantangan berat berhasil dilewati. Satu kunci lagi sudah di tanganmu!',icon:'🗝️',img:''},
+  q3:{show:true,title:'Petunjuk Rumit Terpecahkan',text:'Kerja bagus! Kamu dan tim makin kompak. Satu langkah lagi menuju ruangan berikutnya.',icon:'🧩',img:'asset/Personality Quiz/pop up achievement(_)/interactive slide 2 (soal 5)/puzzle.svg'},
+  q4:{show:true,title:'Pintu Terbuka!',text:'Kerja bagus! Kamu berhasil menyusun potongan informasi yang saling berkaitan jadi satu kesimpulan. Satu langkah lagi menuju ruangan berikutnya.',icon:'🔓',img:'',lock:true},
+  q5:{show:false,title:'Waktu Terus Berjalan',text:'Kamu tetap melangkah meski waktu makin menipis. Tinggal sedikit lagi!',icon:'⏳',img:''},
+  q6:{show:false,title:'Keputusan Diambil!',text:'Kamu berhasil melewati momen menegangkan dengan caramu sendiri.',icon:'⚖️',img:''},
+  q7:{show:false,title:'Kunci Terakhir!',text:'Kunci terakhir sudah di depan matamu. Satu tantangan lagi!',icon:'🗝️',img:''},
+  q8:{show:false,title:'Tantangan 9 Selesai',text:'Semua tantangan berhasil kamu lewati!',icon:'🎉',img:''},
+  door:{show:false,title:'Misi Berhasil!',text:'Kamu dan tim berhasil keluar! Saatnya melihat karakter C.A.R.I.N.G. yang paling dominan dalam dirimu.',icon:'',img:'',sils:true,btn:'LIHAT HASIL'}
+};
+const CMAP={q0:'c0',q1:'c1',q2:'c2',q3:'c3',q4:'c4',q5:'c5',q6:'c6',q7:'c7',door:'c8'};
+const SP='<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.500 3A4.500 4.500 0 0014 8v8a4.500 4.500 0 002.500-4zM14 3.200v2.100a7 7 0 010 13.400v2.100a9 9 0 000-17.600z"/></svg>',MU='<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 4V5L7 9H3zm13.600 3l2.700-2.700-1.400-1.400-2.700 2.700-2.700-2.700-1.400 1.400 2.700 2.700-2.700 2.700 1.400 1.400 2.700-2.700 2.700 2.700 1.400-1.400z"/></svg>';
+const CH='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
+const nav=()=>`<button class="nv" id="pv" aria-label="Kembali">${CH}</button><button class="nv r" id="nx" aria-label="Lanjut">${CH}</button>`;
+const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const P=[{k:'intro'},{k:'rules'},...[0,1,2,3].map(i=>({k:'pro',i})),...quizData.map((_,i)=>({k:'q',i})),{k:'door'},{k:'res'},{k:'end'}];
+const PRO=[['Pagi hari, kamu dan tim baru saja tiba di kantor untuk memulai kerja seperti biasa.'],['Sistem keamanan gedung tiba-tiba mengaktifkan mode uji coba mendadak dari pusat kendali, dan seluruh pintu langsung terkunci otomatis. Kamu dan tim pun terjebak di tengah aktivitas kerja.'],['Satu pesan muncul di layar terdekat:','OFFICE LOCKDOWN','"Selesaikan 9 tantangan yang tersebar di seluruh gedung untuk menemukan kunci terakhir menuju pintu keluar."'],['Bersiaplah menghadapi hari paling menegangkan di kantor!']];
+/* jam: prolog 08.00–08.30, tantangan 1–9 */
+/* nomor Prolog di header: halaman p1 & p2 sama-sama 'PROLOG 2' (hal. 1 & hal. 2), p3 jadi 'PROLOG 3' */
+const PRO_NUM=[1,2,2,3],PRO_LBL=['Prolog 1','Prolog 2 - hal. 1','Prolog 2 - hal. 2','Prolog 3'];
+const MIN_PRO=[480,490,500,510],MIN_Q=[540,570,600,660,780,840,960,1050,1060];
+/* siklus hari: [warna atas, tengah, bawah, matahari x%, y%] */
+const SKY=[['#ec8a82','#e4b79a','#93d2ba',96,96],['#e9967f','#e5bf8c','#9cd1b4',94,90],['#ff8a6e','#ffa968','#f8e07a',96,40],['#ffa23a','#ffc058','#fbe08a',86,6],['#eaa31e','#f0bb3a','#e8d87a',50,2],['#eaa31e','#f1bd45','#e9d27a',8,14],['#e98a7c','#eea96e','#f3c670',2,48],['#b98cc0','#ee9f7c','#f7b877',-2,72],['#8f8fc8','#c58fb2','#f08a7b',-2,72]];
+let pi=0,A=Array(9).fill(null),name='',ord=quizData.map(()=>shuf(TR)),cur=480,muted=0,musicVol=.6,mediaVol=.8;
+try{const s=JSON.parse(localStorage.crV2||'null');if(s&&s.n){name=s.n;A=s.a;pi=s.p}muted=+localStorage.crM||0;const _a=localStorage.crMu,_b=localStorage.crMd;if(_a!=null&&_a!=='')musicVol=Math.min(1,Math.max(0,+_a)||0);if(_b!=null&&_b!=='')mediaVol=Math.min(1,Math.max(0,+_b)||0)}catch(e){}
+const save=()=>{try{localStorage.crV2=JSON.stringify({n:name,a:A,p:pi})}catch(e){}};
+/* ===== AUDIO ===== */
+/* =====================================================================
+   🎵 BGM (MUSIK LATAR) — GANTI DI SINI
+   BGM_MAIN : SATU lagu looping untuk SEMUA halaman.  Contoh: 'audio/bgm.mp3'  (.mp3 / .ogg / .wav)
+   Mau lagu beda per halaman? isi SND.intro (dipakai Intro + Rules) / SND.p0 ... SND.end di bawah:
+   kalau terisi, lagu itu menimpa BGM_MAIN di halaman tersebut.
+   Kosong ('') = tanpa musik. Volumenya diatur slider "Music Volume".
+   ===================================================================== */
+const BGM_MAIN='';   // ← 🎵 BGM PLACEHOLDER: taro path lagu kamu di antara tanda kutip
+const bgm=new Audio();bgm.loop=true;let bgmSrc='';
+/* ===== FADE POPUP: pengali volume 0..1 untuk BGM + suara webm (suara UI/sfx tidak ikut). Popup muncul → fade out; lanjut/tutup popup → fade in ===== */
+let fade=1,fadeRaf=0;
+const mv=()=>Math.min(1,Math.max(0,musicVol*fade)),dv=()=>Math.min(1,Math.max(0,mediaVol*fade));
+function fadeTo(to,ms){cancelAnimationFrame(fadeRaf);const f=fade,t0=performance.now();
+(function r(){const k=ms>0?Math.max(0,Math.min(1,(performance.now()-t0)/ms)):1;fade=f+(to-f)*k;bgm.volume=mv();VID.forEach(x=>{x.volume=Math.min(1,dv()*(x._lf||1))});if(k<1)fadeRaf=requestAnimationFrame(r)})()}
+const VID=new Set();   /* semua <video> yang lagi/pernah diputar (supaya bisa di-mute / dimatikan walau sudah lepas dari halaman) */
+const key=p=>p.k=='pro'?'p'+p.i:p.k=='q'?'q'+p.i:p.k;
+function play(k){if(k=='rules')k='intro';const s=SND[k]||BGM_MAIN;if(!s){bgm.pause();bgmSrc='';return}if(bgmSrc!==s){bgmSrc=s;bgm.src=s}bgm.muted=!!muted;bgm.volume=mv();bgm.play().catch(()=>{})}
+/* muted = MUTE ALL | musicVol = BGM | mediaVol = suara UI + suara webm */
+function applyAudio(){bgm.muted=!!muted;bgm.volume=mv();VID.forEach(x=>{x.muted=!!muted||!!x.dataset.ns;x.volume=Math.min(1,dv()*(x._lf||1))});
+$('snd').innerHTML=muted||(musicVol<=0&&mediaVol<=0)?MU:SP;
+const t=$('mall');t.classList.toggle('on',!!muted);t.setAttribute('aria-checked',muted?'true':'false');
+$('vm').value=musicVol;$('vd').value=mediaVol;$('mvv').textContent=Math.round(musicVol*100)+'%';$('mdv').textContent=Math.round(mediaVol*100)+'%';
+try{localStorage.crM=muted?1:0;localStorage.crMu=musicVol;localStorage.crMd=mediaVol}catch(e){}}
+const setM=v=>{muted=v?1:0;applyAudio()};
+/* ===== UI SFX SINTETIS (WebAudio, tanpa file) — pelan & ala game; kalau SND[k] diisi file, file yang dipakai ===== */
+let AC=null,ACF=null;
+const UIS={ /* [gelombang, [nada Hz], jeda antar nada (s), durasi (s), puncak volume] */
+  hover:['sine',[1320],0,.035,.035],
+  click:['square',[440,660],.045,.07,.045],
+  sel:['triangle',[660,990],.05,.12,.07],
+  next:['square',[520,780],.045,.08,.04],
+  back:['square',[520,350],.045,.08,.04],
+  cp:['triangle',[523,659,784,1047],.07,.16,.07],
+  err:['sawtooth',[150,120],.06,.12,.035],
+  flash:['triangle',[392,523,659,784,1047,1319],.055,.32,.07]
+};
+function primeAC(){try{if(!AC){AC=new (window.AudioContext||window.webkitAudioContext)();ACF=AC.createBiquadFilter();ACF.type='lowpass';ACF.frequency.value=3200;ACF.connect(AC.destination)}if(AC.state=='suspended')AC.resume()}catch(e){}}
+/* PROMPT 8-BIT (popup checkpoint): gelombang pulsa 25% ala NES + bass segitiga, langsung ke output (tanpa lowpass) biar tetap 'renyah'; volume normal */
+let PW=null;
+function prompt8(){if(muted||mediaVol<=0||!AC||AC.state!='running')return;
+try{if(!PW){const n=24,re=new Float32Array(n+1),im=new Float32Array(n+1);for(let k=1;k<=n;k++)re[k]=2*Math.sin(k*Math.PI*.25)/(k*Math.PI);PW=AC.createPeriodicWave(re,im)}
+const t0=AC.currentTime+.01,lead=.17*mediaVol,bass=.12*mediaVol,
+seq=[[659.25,.085],[880,.085],[1318.5,.085],[0,.04],[1318.5,.3]];let t=t0;
+const note=(type,f,t1,d,v)=>{const o=AC.createOscillator(),g=AC.createGain();if(type=='pulse')o.setPeriodicWave(PW);else o.type=type;o.frequency.value=f;
+g.gain.setValueAtTime(0,t1);g.gain.linearRampToValueAtTime(v,t1+.004);g.gain.setValueAtTime(v*.85,Math.max(t1+.005,t1+d-.03));g.gain.linearRampToValueAtTime(0,t1+d);
+o.connect(g);g.connect(AC.destination);o.start(t1);o.stop(t1+d+.02)};
+seq.forEach(([f,d])=>{if(f)note('pulse',f,t,d,lead);t+=d});
+note('triangle',220,t0,.255,bass);note('triangle',329.63,t0+.295,.3,bass)}catch(e){}}
+function blip(k){if(k=='cp')return prompt8();const d=UIS[k];if(!d||muted||mediaVol<=0||!AC||AC.state!='running')return;
+try{const t0=AC.currentTime+.005;
+d[1].forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain(),t=t0+i*d[2],pk=d[4]*mediaVol;
+o.type=d[0];o.frequency.value=f;o.detune.value=(Math.random()-.5)*40;
+g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(pk,t+.006);g.gain.exponentialRampToValueAtTime(.0001,t+d[3]);
+o.connect(g);g.connect(ACF);o.start(t);o.stop(t+d[3]+.02)})}catch(e){}}
+function sfx(k){if(muted)return;if(SND[k]){const a=new Audio(SND[k]);a.volume=mediaVol;a.play().catch(()=>{})}else blip(k)}
+/* hover (hanya perangkat dengan mouse; dibatasi biar nggak berisik) */
+let lastHv=0;
+if(matchMedia('(hover:hover) and (pointer:fine)').matches)document.addEventListener('mouseover',e=>{const b=e.target.closest&&e.target.closest('button');if(!b||b.disabled||b.contains(e.relatedTarget))return;const n=performance.now();if(n-lastHv<60)return;lastHv=n;sfx('hover')},true);
+/* ===== MEDIA ===== */
+function m(k,l,s){s=s||MEDIA[k];const n=KEYS.indexOf(k)+1;return !s?`<div class="ph"><span><b>${n?'ILUSTRASI '+n:'POSTER'}</b><br>${l}<small>.jpg / .gif / .webm<br>taro URL disini → MEDIA.${k}</small></span></div>`:/\.(webm|mp4)(\?|$)/i.test(s)?`<video src="${s}" preload="auto"${k=='door'?'':' loop'} playsinline disablepictureinpicture disableremoteplayback controlslist="nodownload noremoteplayback"${k=='door'?' data-door':''}></video>`:`<img src="${s}" alt="${l}" draggable="false">`}
+const prim=()=>{const s={};TR.forEach(t=>s[t]=0);A.forEach(t=>t&&s[t]++);return TR.slice().sort((a,b)=>s[b]-s[a])[0]};
+const V={
+intro:()=>`<div class="col"><h2 class="hi">Selamat Datang Summareconers!<br>Siap mengenal dirimu lebih jauh?</h2><div class="bub">Jalani satu shift penuh, hadapi berbagai situasi kerja, dan ambil keputusan berdasarkan caramu sendiri. Setiap pilihan akan membantumu mengenali karakter dan gaya kerjamu!</div><input id="nm" class="in" maxlength="40" autocomplete="off" placeholder="Tulis nama kamu di sini" value="${name}"><button class="go" id="gb">LANJUTKAN</button></div>`,
+rules:()=>`<div class="col"><div class="row"><div class="bub">Ada 9 tantangan yang akan kamu lewati, setiap tantangan, pilih 1 jawaban yang paling mewakili dirimu.</div><div class="ib">🚨</div></div><div class="row"><div class="ib">❗</div><div class="bub">Ingat, tidak ada pilihan yang salah. Setiap keputusan akan menuntunmu pada satu hasil akhir: Mascot C.A.R.I.N.G. mana yang paling mendominasi di dalam dirimu.</div></div><div class="row"><div class="bub">TEMUKAN KARAKTER C.A.R.I.N.G. YANG PALING KAMU!</div><div class="ib">❓</div></div></div>`,
+pro:p=>`<div class="sp fill"><div class="med">${m('p'+p.i,'Ilustrasi '+PRO_LBL[p.i])}</div><div class="col g${PRO[p.i].length>2?' c3':''}">${p.i==3?`<div class="bub big"><div class="ib">⚠️</div><span>${PRO[3][0]}</span></div>`:PRO[p.i].map(t=>`<div class="bub big${t=='OFFICE LOCKDOWN'?' lkd':''}">${t}</div>`).join('')}${p.i==2?warnHTML():''}</div></div>`,
+q:p=>{const q=quizData[p.i];return `<div class="qg"><div class="lf"><div class="med">${m('q'+p.i,'Ilustrasi Tantangan '+(p.i+1))}</div><p class="sc">${q.text}</p></div><div class="rt"><h3>Apa yang paling mungkin kamu lakukan?</h3><div class="opts">${ord[p.i].map(t=>`<button class="op${A[p.i]==t?' sel':''}" data-t="${t}">${q.options.find(x=>x.trait==t).text}</button>`).join('')}</div></div></div>`},
+door:()=>`<div class="med dr">${m('door','Ilustrasi Pintu Keluar')}</div>`,
+end:()=>`<div class="endp"><div class="med">${m('end','Ilustrasi Penutup')}</div><div class="endb"><button class="go" id="bk">Lihat Hasil Kembali</button><button class="lnk" id="rs">↺ Ulangi Simulasi</button></div></div>`,
+res:()=>{const t=prim(),c=characterData[t],src=POSTER[t],n=TR.indexOf(t)+1;return `<div class="sp rs"><div class="rl t-${t}" style="background:${c.hex}"><small>KARAKTER DOMINAN KAMU</small><h1>${c.name.toUpperCase()}</h1><div class="bts"><button class="go" id="dl">⬇ DOWNLOAD HASIL</button><button class="go sec" id="rs">ULANGI</button></div></div><div class="med pf" id="pf">${src?`<img src="${src}" alt="Poster ${c.name}">`:`<div class="ph"><span><b>POSTER ${n}</b><br>${c.name}<small>.png / .jpg / .webp (rasio 9:16)<br>taro URL disini → POSTER.${t}</small></span></div>`}<div class="nmo"><small>SELAMAT!</small><b>${name}</b></div></div></div>`}
+};
+/* ===== SKY, HEADER, CLOCK ===== */
+function sky(p){const s=p.k=='intro'||p.k=='rules'||p.k=='end'?['#EDE7DC','#EDE7DC','#E3DACB']:p.k=='res'?['#c3e6cf','#aedbbf','#dcedc8']:p.k=='pro'?['#8fd3bd','#9fd9c4','#dbe8b4',95,88]:p.k=='q'?SKY[p.i]:['#8f8fc8','#b88fbd','#f08a7b',-2,76];
+const b=document.body.style;b.setProperty('--a',s[0]);b.setProperty('--b',s[1]);b.setProperty('--c',s[2]);const u=$('sun').style,w=$('skysun').style;u.opacity=w.opacity=s[3]==null?0:1;if(s[3]!=null){u.left=w.left=s[3]+'%';u.top=w.top=s[4]+'%'}}
+function tick(to){const f=cur,s=performance.now();cur=to;(function r(n){const k=Math.min(1,(n-s)/900),v=Math.round(f+(to-f)*k);$('clk').textContent=String(v/60|0).padStart(2,'0')+'.'+String(v%60).padStart(2,'0');if(k<1)requestAnimationFrame(r)})(s)}
+function hdr(p){let a='',b='',tr=0,t=0;
+if(p.k=='intro')a='';else if(p.k=='rules')a='RULES!';else if(p.k=='pro'){a='PROLOG '+PRO_NUM[p.i];t=MIN_PRO[p.i]}
+else if(p.k=='q'){a='TANTANGAN '+(p.i+1);b=quizData[p.i].title.toUpperCase();tr=1;t=MIN_Q[p.i]}
+else if(p.k=='door'){a='TANTANGAN 9';b='MISI BERHASIL!';tr=1;t=1060}else{a=p.k=='end'?'PENUTUP':'HASIL KAMU';t=0}
+$('t1').textContent=a;$('t2').textContent=b;$('trk').style.visibility=tr?'visible':'hidden';$('trk').style.display=tr?'':'none';$('trk').parentElement.classList.toggle('nt',!tr);$('av').style.left=(p.k=='q'?p.i/8*100:100)+'%';
+$('clk').style.visibility=t?'visible':'hidden';if(t)tick(t)}
+function fitHero(){const e=$('hero').querySelector('img,video');if(!e)return;const set=()=>{const w=e.naturalWidth||e.videoWidth,h=e.naturalHeight||e.videoHeight;if(w&&h)$('card').style.setProperty('--har',(w/h).toFixed(4))};
+if(e.tagName=='IMG'?(e.complete&&e.naturalWidth):e.readyState>=1)set();else e.addEventListener(e.tagName=='IMG'?'load':'loadedmetadata',set,{once:true})}
+const SPLIT={intro:'Ilustrasi Intro',rules:'Ilustrasi Rules'},NAVP={rules:1,pro:1,q:1,door:1};
+function draw(){const p=P[pi],s=$('stage'),c=$('card'),h=$('hero'),nb=$('navbar'),sp=!!SPLIT[p.k],was=c.classList.contains('split');
+hushVideos();rotReset();hdr(p);sky(p);play(key(p));s.className='stage out';nb.classList.add('out');h.classList.add('out');if(sp!==was)c.classList.add('chg');
+setTimeout(()=>{c.classList.toggle('split',sp);c.classList.toggle('ttc',p.k=='intro'||p.k=='rules'||p.k=='pro'||p.k=='res');c.classList.toggle('res',p.k=='res');if(p.k=='res'){const t=prim();c.dataset.t=t;c.style.setProperty('--rc',characterData[t].hex)}c.classList.toggle('full',p.k=='end'||p.k=='door');c.classList.toggle('dor',p.k=='door');killVideos();const mob=matchMedia('(max-width:820px)').matches;h.innerHTML=sp&&!mob?m(p.k,SPLIT[p.k]):'';if(sp&&!mob)fitHero();sdDone=0;s.innerHTML=(sp&&mob?`<div class="med mh">${m(p.k,SPLIT[p.k])}</div>`:'')+V[p.k](p);s.scrollTop=0;nb.innerHTML=NAVP[p.k]?nav():p.k=='res'?'<button class="go" id="ce">LANJUT KE HALAMAN PENUTUP ▶</button>':'';
+const bgmOnly=(p.k=='intro'||p.k=='rules')&&!!(SND.intro||BGM_MAIN);document.querySelectorAll('.med video,.hero video').forEach(v=>{if(bgmOnly)v.dataset.ns=1;if(v.hasAttribute('data-door')&&doorGate()){VID.add(v);rot.hold=1;return}vplay(v)});if(p.k=='door'){doorWatch();rotUpdate()}if(p.k=='res'){const im=document.querySelector('#pf img');fitPoster();if(im&&!(im.complete&&im.naturalWidth))im.addEventListener('load',fitPoster,{once:true});requestAnimationFrame(fitPoster)}s.className='stage';hint();setTimeout(hint,350);nb.className='nav'+(NAVP[p.k]||p.k=='res'?'':' off')+(p.k=='res'?' wide':'');h.classList.remove('out');s.scrollTop=0;requestAnimationFrame(()=>c.classList.remove('chg'))},230);save()}
+/* ===== VIDEO BERSUARA + PINTU → FLASH → HASIL ===== */
+const DOOR_LEAD=.2,         /* flash dimulai sekian DETIK sebelum video pintu selesai */
+      DOOR_FLASH_HOLD=450,  /* lama layar putih penuh (ms) saat pindah ke hasil */
+      DOOR_AUTO_MS=3500;    /* kalau MEDIA.door BUKAN video (gambar/gif/placeholder): auto lanjut setelah sekian ms; 0 = nonaktif */
+let doorT=0,doorRaf=0,flashing=0;
+/* volume webm yang looping: setelah 1 loop penuh selesai -> turun halus ke 35% (supaya peserta tidak over-stimulated) */
+const LOOP_VOL=.35;
+function loopDuck(v){if(v._lo)return;v._lo=1;const s=performance.now();(function r(n){if(!VID.has(v))return;const k=Math.min(1,(n-s)/700);v._lf=1-(1-LOOP_VOL)*k;v.volume=Math.min(1,dv()*v._lf);if(k<1)requestAnimationFrame(r)})(s)}
+function watchLoop(v){if(v._lw||v.hasAttribute('data-door'))return;v._lw=1;v._lp=0;v.addEventListener('timeupdate',()=>{if(!v._lo&&v.currentTime<v._lp-.1)loopDuck(v);v._lp=v.currentTime})}
+function vplay(v){VID.add(v);watchLoop(v);v.muted=!!muted||!!v.dataset.ns;v.volume=Math.min(1,dv()*(v._lf||1));const r=v.play();
+if(r&&r.catch)r.catch(()=>{if(!VID.has(v))return;v.muted=true;v.play().catch(()=>{});if(muted||mediaVol<=0||v.dataset.ns)return;
+/* browser memblokir autoplay BERSUARA → video jalan senyap + tombol 'ketuk untuk suara' (tap mana saja juga menyalakan suara; video pintu diulang dari awal) */
+const host=v.parentElement;if(!host)return;const b=document.createElement('button');b.className='unm';b.textContent='🔇 KETUK UNTUK SUARA';host.appendChild(b);
+const on=()=>{if(!b.isConnected)return;b.remove();if(!VID.has(v))return;v.muted=!!muted;if(v.hasAttribute('data-door')){try{v.currentTime=0}catch(e){}}v.play().catch(()=>{})};
+b.addEventListener('click',e=>{e.stopPropagation();on()});document.addEventListener('pointerdown',on,{once:true})})}
+/* video yang dibuang dari halaman TETAP bersuara kalau tidak dihentikan → hentikan & lepas sumbernya */
+function hushVideos(){VID.forEach(v=>{try{v.pause()}catch(e){}})}
+function killVideos(root){const all=new Set([...VID,...(root||document).querySelectorAll('video')]);
+all.forEach(v=>{if(root&&!root.contains(v))return;try{v.onended=null;v.pause();v.removeAttribute('src');v.load()}catch(e){}VID.delete(v)})}
+/* siapkan (decode) poster hasil lebih awal supaya halaman hasil muncul tanpa patah-patah */
+function warmPoster(){try{const s=POSTER[prim()];if(s){const i=new Image();i.src=s;if(i.decode)i.decode().catch(()=>{})}}catch(e){}}
+/* ===== ROTATE PROMPT (HP): putar ke landscape -> video pintu play -> selesai -> putar balik ke portrait -> hasil =====
+   Aktif hanya di layar kecil (sisi terpendek <= 600px). Layar besar/desktop tidak terpengaruh.
+   Ada tombol "lanjut tanpa memutar" untuk yang rotasi layarnya dikunci. */
+const rot={skip:0,hold:0,ended:0,mode:''};
+const ROT_PHONE='<svg class="rph" viewBox="0 0 64 96" aria-hidden="true"><rect x="6" y="4" width="52" height="88" rx="11" fill="#fff" stroke="#0F6B35" stroke-width="5"/><rect x="13" y="14" width="38" height="60" rx="4" fill="#F28A30"/><circle cx="32" cy="83" r="3" fill="#0F6B35"/></svg>';
+const ROT_TXT={
+land:['Putar HP kamu dulu ya!','Miringkan HP ke mode landscape, videonya akan langsung main.','Kalau layar tidak berputar, matikan Kunci Rotasi Layar (Portrait Orientation Lock).','Lanjut tanpa memutar'],
+port:['Putar balik HP kamu','Kembalikan HP ke mode portrait untuk melihat hasilmu.','','Lanjut sekarang']};
+const smallScr=()=>Math.min(innerWidth,innerHeight)<=600;
+const doorGate=()=>smallScr()&&innerWidth<=innerHeight&&!rot.skip;
+function showRot(m){const r=$('rot');if(rot.mode===m&&r.classList.contains('on'))return;rot.mode=m;const t=ROT_TXT[m];
+r.className='on '+m;r.innerHTML=ROT_PHONE+`<div class="rtx"><h2>${t[0]}</h2><p>${t[1]}</p>${t[2]?`<small>${t[2]}</small>`:''}<button class="rsk" data-rsk>${t[3]}</button></div>`}
+function hideRot(){rot.mode='';const r=$('rot');if(r)r.className=''}
+function rotReset(){rot.skip=0;rot.hold=0;rot.ended=0;hideRot()}
+function rotUpdate(){const p=P[pi];if(!p||p.k!='door'||flashing)return;
+const v=document.querySelector('#stage video[data-door]'),gate=!!v&&!rot.skip&&smallScr(),land=innerWidth>innerHeight;
+if(rot.ended){if(gate&&land)showRot('port');else{hideRot();flashGo()}return}
+if(!gate||land){hideRot();if(v&&rot.hold){rot.hold=0;vplay(v)}return}
+rot.hold=1;try{v.pause()}catch(e){}showRot('land')}
+let rotT=0;const rotSoon=()=>{clearTimeout(rotT);rotT=setTimeout(rotUpdate,120)};
+addEventListener('resize',rotSoon);addEventListener('orientationchange',()=>setTimeout(rotUpdate,300));
+if(screen.orientation&&screen.orientation.addEventListener)screen.orientation.addEventListener('change',rotSoon);
+$('rot').addEventListener('click',e=>{if(!e.target.closest('[data-rsk]'))return;sfx('click');rot.skip=1;rotUpdate()});
+function doorWatch(){clearTimeout(doorT);cancelAnimationFrame(doorRaf);const p=P[pi];if(p.k!='door')return;warmPoster();
+const v=document.querySelector('#stage video[data-door]'),go=()=>{if(P[pi]!==p||flashing||$('mod').classList.contains('on'))return;rot.ended=1;rotUpdate()};
+if(v){let done=0;const fire=()=>{if(done)return;done=1;go()};
+v.onended=fire;   /* cadangan kalau durasi video tidak terbaca */
+(function w(){if(done||P[pi]!==p)return;const d=v.duration;if(d&&isFinite(d)&&d-v.currentTime<=DOOR_LEAD){fire();return}doorRaf=requestAnimationFrame(w)})()}
+else if(DOOR_AUTO_MS>0)doorT=setTimeout(go,DOOR_AUTO_MS)}
+/* tunggu halaman hasil selesai dirender + poster ter-decode, baru flash dibuka (jadi tidak ada patah-patah saat layar putih menghilang) */
+function resReady(){return new Promise(ok=>{let n=0;(function w(){if(document.querySelector('.sp.rs')){const im=document.querySelector('#pf img');if(im&&im.decode)im.decode().then(()=>ok(),()=>ok());else ok();return}
+if(++n>150){ok();return}requestAnimationFrame(w)})()})}
+function flashGo(){flashing=1;const f=$('flash'),B=document.body;sfx('flash');f.className='in';
+const fin=()=>{if(f.className==='')return;f.className='';flashing=0;setTimeout(()=>B.classList.remove('rvl','rvr'),1500)};
+setTimeout(()=>{B.classList.add('rvl');pi=P.findIndex(x=>x.k=='res');draw();
+Promise.all([Promise.race([resReady(),new Promise(r=>setTimeout(r,1800))]),new Promise(r=>setTimeout(r,DOOR_FLASH_HOLD))])
+.then(()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{B.classList.add('rvr');f.className='out';setTimeout(fin,1300)})))},520);
+f.onanimationend=e=>{if(e.animationName=='flout')fin()}}
+/* ===== CHECKPOINT MODAL ===== */
+const STAR_SVG='<svg viewBox="0 0 24 24"><path d="M12 2.2l2.9 6.6 7.1.7-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.5l7.1-.7z"/></svg>',star=c=>`<i class="sx ${c}">${STAR_IMG?`<img src="${STAR_IMG}" alt="">`:STAR_SVG}</i>`;
+const popupOn=k=>POPUPS_ON&&POPUP[k]&&POPUP[k].show;
+const LOCK_SVG=()=>`<svg class="lkx" viewBox="-4 -100 240 302" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet"><g transform="translate(44.05 39.31)"><g class="sh"><g transform="translate(-44.05 -39.31)"><g transform="translate(20.4 -64.7)"><path d="M49.1894 4.32094C83.3854 -5.09502 118.74 14.9935 128.156 49.1894L136.393 79.1047L112.044 85.8095L103.807 55.8942C98.1575 35.3779 76.6117 23.4405 56.0158 29.1115C35.483 34.7654 23.6998 55.8125 29.3662 76.3918L41.7222 121.265C44.7845 132.385 52.4115 141.021 62.0214 145.712C60.5576 153.966 58.2245 168.27 56.9724 176.692C56.9333 176.955 56.8964 177.214 56.8589 177.469C38.7311 170.306 24.0703 155.01 18.4969 134.771L4.32114 83.2887C-5.09505 49.0926 14.9934 13.7371 49.1894 4.32094Z" fill="#F3EBEB" stroke="black" stroke-width="4"/></g></g></g></g><g class="bd"><rect y="51.4728" width="193.887" height="146.173" rx="22.0412" transform="rotate(-15.3954 0 51.4728)" fill="black"/><rect x="5.20898" y="53.619" width="184.728" height="139.268" rx="21" transform="rotate(-15.3954 5.20898 53.619)" fill="#EEAC2A"/><path d="M104.866 66.5941C114.549 63.928 124.56 69.6161 127.226 79.2986C128.965 85.614 127.149 92.0685 122.989 96.5339L127.842 114.156C129.238 119.228 126.259 124.472 121.188 125.868C116.116 127.265 110.872 124.285 109.475 119.214L104.623 101.59C98.7642 99.8832 93.9005 95.2686 92.1616 88.9538C89.4954 79.2713 95.1836 69.2603 104.866 66.5941Z" fill="black"/></g></svg>`;
+function cp(k){const d=POPUP[k],src=d.img||MEDIA[CMAP[k]]||'',
+ic=d.lock?LOCK_SVG():src?m('c'+k,'',src):d.sils?`<span class="sils">${TR.map(t=>`<i style="background:${characterData[t].hex}"></i>`).join('')}</span>`:d.icon;
+$('mm').innerHTML=`<div class="mw"><div class="bub or">${d.text}</div><div class="chest"><div class="cb"></div><div class="ic${d.lock?' lk':''}"><div class="ico">${ic}</div></div>${star('s1')}${star('s2')}${star('s3')}${star('s4')}<div class="cf"><div class="lb">${d.title}</div></div></div>${d.btn2?`<div class="btns"><button class="go" id="ct" style="width:100%">${d.btn}</button><button class="go" id="ct2" style="width:100%;background:#fff;color:var(--ink);box-shadow:0 5px 0 #d9cfc4">${d.btn2}</button></div>`:`<button class="go" id="ct" style="width:100%">${d.btn||'LANJUT ▶'}</button>`}</div>`;
+$('mod').classList.add('on');document.querySelectorAll('#mm video').forEach(vplay);fadeTo(0,700);sfx('cp')}
+/* ===== FLOW ===== */
+function nxt(){const p=P[pi];
+if(p.k=='intro'){const n=$('nm'),v=(n.value||'').replace(/[<>"&\/\\]/g,'').trim();if(!v){sfx('err');n.classList.remove('er');void n.offsetWidth;n.classList.add('er');return}name=v}
+else if(p.k=='q'&&!A[p.i]){sfx('err');document.querySelector('.opts').animate([{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'none'}],{duration:300});return}
+const k=key(p);if(popupOn(k)){cp(k);return}
+pi++;draw()}
+function reset(){A=Array(9).fill(null);ord=quizData.map(()=>shuf(TR));pi=0;draw()}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),5200)}
+/* petunjuk scroll (mobile): SATU panah bulat di bawah area scroll; hilang setelah sekali mentok ke bawah, muncul lagi tiap ganti halaman */
+let sdDone=0;
+function hint(){const s=$('stage'),a=$('sdn');if(!s||!a)return;const r=s.scrollHeight-s.clientHeight;
+if(r>6&&r-s.scrollTop<=6)sdDone=1;
+const show=matchMedia('(max-width:820px)').matches&&!sdDone&&r>6;
+if(show){const sr=s.getBoundingClientRect(),cr=$('card').getBoundingClientRect();a.style.top=(sr.bottom-cr.top-52)+'px'}
+a.classList.toggle('on',show)}
+$('stage').addEventListener('scroll',hint,{passive:true});['load','loadedmetadata'].forEach(e=>$('stage').addEventListener(e,hint,true));addEventListener('resize',hint);
+$('sdn').onclick=()=>{sfx('click');const s=$('stage');s.scrollBy({top:Math.max(160,s.clientHeight*.75),behavior:'smooth'})};
+matchMedia('(max-width:820px)').addEventListener('change',()=>{if(SPLIT[P[pi].k])draw();else hint()});
+/* poster: rasio ikut file aslinya (tanpa crop); nama peserta dikecilkan otomatis (maks 2 baris) supaya nama panjang tetap muat */
+function fitPoster(){const pf=$('pf');if(!pf)return;const im=pf.querySelector('img');if(im&&im.naturalWidth){pf.style.aspectRatio=im.naturalWidth+'/'+im.naturalHeight;const r=(im.naturalWidth/im.naturalHeight).toFixed(4);pf.parentElement.style.setProperty('--pr',r);const cd=document.querySelector('.card');if(cd)cd.style.setProperty('--pr',r)}fitName()}
+function fitName(){const pf=$('pf'),b=pf&&pf.querySelector('.nmo b');if(!b||!pf.clientWidth)return;let f=4;b.style.fontSize=f+'cqw';
+const lh=()=>parseFloat(getComputedStyle(b).lineHeight)||b.offsetHeight;
+while(f>2.2&&(b.offsetHeight>lh()*2.2||b.scrollWidth>b.clientWidth+1)){f-=.2;b.style.fontSize=f.toFixed(1)+'cqw'}}
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitName);
+addEventListener('resize',fitPoster);addEventListener('orientationchange',fitPoster);
+/* pecah teks elemen jadi baris-baris sesuai hasil wrap di layar → [[teks, y tengah baris]] */
+function textLines(el){const tn=el.firstChild;if(!tn||tn.nodeType!=3){const r=el.getBoundingClientRect();return[[el.textContent,r.top+r.height/2]]}
+const r=document.createRange(),o=[],S=tn.textContent;let key=null;
+for(let i=0;i<S.length;i++){r.setStart(tn,i);r.setEnd(tn,i+1);const q=r.getClientRects()[0];if(!q||!q.width)continue;const k=Math.round(q.top);
+if(k!==key){key=k;o.push(['',q.top+q.height/2])}o[o.length-1][0]+=S[i]}
+return o.map(a=>[a[0].trim(),a[1]])}
+/* ===== siapkan canvas poster: frame TERAKHIR GIF (via fetch+decode, bukan <img> yg lagi jalan) ===== */
+async function posterCanvas(trait){
+  const src=POSTER[trait];
+  if(!src)return null;
+  if(/\.gif(\?|$)/i.test(src)){
+    try{
+      const r=await fetch(src);if(!r.ok)throw new Error('http '+r.status);
+      const buf=await r.arrayBuffer();
+      const{width,height,data}=decodeGifLastFrame(buf);
+      const cv=document.createElement('canvas');cv.width=width;cv.height=height;
+      cv.getContext('2d').putImageData(new ImageData(data,width,height),0,0);
+      return cv;
+    }catch(e){/* lanjut ke fallback <img> di bawah (mis. dibuka via file://, atau fetch gagal) */}
+  }
+  const im=await new Promise((res,rej)=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>res(i);i.onerror=()=>rej(new Error('gagal memuat '+src));i.src=src});
+  const cv=document.createElement('canvas');cv.width=im.naturalWidth;cv.height=im.naturalHeight;
+  cv.getContext('2d').drawImage(im,0,0);
+  return cv;
+}
+/* ===== pemicu download: di HP (kalau Web Share API mendukung file) buka sheet share bawaan ("Simpan Gambar"/"Save to Files"); kalau tidak, anchor-download biasa ===== */
+async function triggerDownload(blob,filename){
+  const touch=matchMedia('(pointer:coarse)').matches||/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if(touch&&navigator.canShare){
+    try{
+      const file=new File([blob],filename,{type:'image/png'});
+      if(navigator.canShare({files:[file]})){
+        await navigator.share({files:[file],title:filename});
+        toast('Pilih "Simpan Gambar" / "Save to Files" di menu yang muncul ✔');
+        return;
+      }
+    }catch(e){if(e&&e.name==='AbortError')return}
+  }
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  toast('Hasil tersimpan ✔');
+}
+/* DOWNLOAD HASIL: poster (frame terakhir, statis) + kotak nama digambar manual ke canvas (tanpa library) */
+async function dl(){
+  const btn=$('dl'),old=btn&&btn.textContent;
+  if(btn){btn.textContent='Menyiapkan gambar...';btn.disabled=true}
+  const t=prim(),c=characterData[t],base=`${name||'hasil'}-CARING-${c.name}`;
+  try{
+    if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+    const cv=await posterCanvas(t);
+    if(!cv){toast('Poster belum diisi (isi POSTER.'+t+' di bagian POSTER HASIL).');return}
+    const pf=$('pf'),nm=pf.querySelector('.nmo'),x=cv.getContext('2d'),k=cv.width/(pf.clientWidth||cv.width);
+    if(nm){const pr=pf.getBoundingClientRect(),nr=nm.getBoundingClientRect(),l=(nr.left-pr.left)*k,t2=(nr.top-pr.top)*k,w=nr.width*k,h=nr.height*k,rd=(parseFloat(getComputedStyle(nm).borderTopLeftRadius)||0)*k;
+    x.fillStyle='#fff';x.beginPath();if(x.roundRect)x.roundRect(l,t2,w,h,rd);else x.rect(l,t2,w,h);x.fill();
+    x.textAlign='center';x.textBaseline='middle';
+    [...nm.children].forEach(el=>{const cs=getComputedStyle(el),ls=(parseFloat(cs.letterSpacing)||0)*k;x.fillStyle=cs.color;x.font=`${cs.fontWeight} ${parseFloat(cs.fontSize)*k}px ${cs.fontFamily}`;if('letterSpacing' in x)x.letterSpacing=ls+'px';
+    textLines(el).forEach(([tx,cy])=>x.fillText(tx,l+w/2+ls/2,(cy-pr.top)*k))})}
+    const blob=await new Promise((res,rej)=>cv.toBlob(b=>b?res(b):rej(new Error('blob')),'image/png'));
+    await triggerDownload(blob,base+'.png');
+  }catch(e){
+    toast('Gagal menyiapkan poster ('+(e&&e.message||'error')+'). Kalau halaman dibuka lewat file://, jalankan lewat server/hosting supaya frame+nama ikut.');
+  }finally{
+    if(btn){btn.textContent=old;btn.disabled=false}
+  }
+}
+const act=e=>{const b=e.target.closest('button');if(!b)return;sfx(b.classList.contains('op')?'sel':(b.id=='pv'||b.id=='bk')?'back':(b.id=='nx'||b.id=='gb'||b.id=='ce')?'next':'click');
+if(b.classList.contains('op')){A[P[pi].i]=b.dataset.t;document.querySelectorAll('.op').forEach(x=>x.classList.toggle('sel',x==b));save();return}
+({pv:()=>{pi--;draw()},nx:nxt,gb:nxt,dl,rs:reset,ce:()=>{pi++;draw()},bk:()=>{pi--;draw()}})[b.id]?.()};
+$('stage').onclick=act;$('navbar').onclick=act;
+$('stage').onkeydown=e=>{if(e.key=='Enter'&&e.target.id=='nm'){sfx('next');nxt()}};
+$('mod').onclick=e=>{if(e.target.closest('#ct2')){sfx('click');$('mod').classList.remove('on');killVideos($('mm'));fadeTo(1,900);return}if(!e.target.closest('#ct'))return;sfx('click');$('mod').classList.remove('on');killVideos($('mm'));pi++;draw();fadeTo(1,1400)};
+$('snd').onclick=()=>{sfx('click');$('sp').classList.remove('on');$('vp').classList.toggle('on')};
+$('set').onclick=()=>{sfx('click');$('vp').classList.remove('on');$('sp').classList.toggle('on')};
+$('mall').onclick=()=>{setM(muted?0:1);if(!muted){play(key(P[pi]));sfx('click')}};
+$('vm').oninput=e=>{musicVol=+e.target.value;applyAudio()};
+$('vd').oninput=e=>{mediaVol=+e.target.value;applyAudio()};$('vd').onchange=()=>sfx('click');
+document.addEventListener('pointerdown',e=>{['vp','sp'].forEach(id=>{const el=$(id);if(el.classList.contains('on')&&!el.contains(e.target)&&!e.target.closest('#snd,#set'))el.classList.remove('on')})});
+$('rs2').onclick=()=>{sfx('click');$('sp').classList.remove('on');reset()};
+document.addEventListener('pointerdown',()=>play(key(P[pi])),{once:true});
+['pointerdown','keydown'].forEach(ev=>document.addEventListener(ev,primeAC,{capture:true}));
+/* ===== PROTEKSI MEDIA: klik kanan & drag dimatikan di webm/gif/gambar ===== */
+const MEDSEL='img,video,.med,.hero,.pf,.endp,.mod,.warn,.sun,.skyw';
+document.addEventListener('contextmenu',e=>{if(e.target.closest&&e.target.closest(MEDSEL))e.preventDefault()},true);
+document.addEventListener('dragstart',e=>{if(e.target.closest&&e.target.closest('img,video'))e.preventDefault()},true);
+/* ===== DEBUG MEDIA: kalau gambar/video gagal dimuat, alasannya tampil langsung di kotak media ===== */
+document.addEventListener('error',e=>{const v=e.target;if(!v||!/^(VIDEO|IMG)$/.test(v.tagName)||!v.closest('.med,.hero'))return;
+const src=v.getAttribute('src')||'',c=v.error?v.error.code:0,
+why=v.tagName=='VIDEO'?({1:'Pemuatan dibatalkan.',2:'Masalah jaringan / file tidak ditemukan.',3:'File ketemu tapi gagal di-decode (codec/encoding tidak didukung browser).',4:'File tidak ditemukan (cek path & huruf besar/kecil) ATAU format/codec tidak didukung browser.'}[c]||'Tidak diketahui.'):'File gambar tidak ditemukan atau formatnya tidak didukung.',
+d=document.createElement('div');d.className='ph';d.style.cssText='border-color:#E53935;color:#B3261E;background:#fff4f2';
+d.innerHTML='<span><b>MEDIA GAGAL DIMUAT</b><br></span>';const sp=d.firstChild;
+sp.append(document.createTextNode(src));const sm=document.createElement('small');sm.textContent=why+(c?' (kode '+c+')':'');sp.append(sm);v.replaceWith(d)},true);
+setM(muted);draw();
+</script></body></html>
