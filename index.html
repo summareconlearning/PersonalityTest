@@ -660,7 +660,7 @@ const PRO_NUM=[1,2,2,3],PRO_LBL=['Prolog 1','Prolog 2 - hal. 1','Prolog 2 - hal.
 const MIN_PRO=[480,490,500,510],MIN_Q=[540,570,600,660,780,840,960,1050,1060];
 /* siklus hari: [warna atas, tengah, bawah, matahari x%, y%] */
 const SKY=[['#ec8a82','#e4b79a','#93d2ba',96,96],['#e9967f','#e5bf8c','#9cd1b4',94,90],['#ff8a6e','#ffa968','#f8e07a',96,40],['#ffa23a','#ffc058','#fbe08a',86,6],['#eaa31e','#f0bb3a','#e8d87a',50,2],['#eaa31e','#f1bd45','#e9d27a',8,14],['#e98a7c','#eea96e','#f3c670',2,48],['#b98cc0','#ee9f7c','#f7b877',-2,72],['#8f8fc8','#c58fb2','#f08a7b',-2,72]];
-let pi=0,A=Array(9).fill(null),name='',ord=quizData.map(()=>shuf(TR)),cur=480,muted=0,musicVol=.6,mediaVol=.8;
+let pi=0,A=Array(9).fill(null),name='',ord=quizData.map(()=>shuf(TR)),cur=480,muted=0,musicVol=.12,mediaVol=.5;
 try{const s=JSON.parse(localStorage.crV2||'null');if(s&&s.n){name=s.n;A=s.a;pi=s.p}muted=+localStorage.crM||0;const _a=localStorage.crMu,_b=localStorage.crMd;if(_a!=null&&_a!=='')musicVol=Math.min(1,Math.max(0,+_a)||0);if(_b!=null&&_b!=='')mediaVol=Math.min(1,Math.max(0,+_b)||0)}catch(e){}
 const save=()=>{try{localStorage.crV2=JSON.stringify({n:name,a:A,p:pi})}catch(e){}};
 /* ===== AUDIO ===== */
