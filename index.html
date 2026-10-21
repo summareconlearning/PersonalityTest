@@ -230,10 +230,14 @@ display:flex;align-items:center;gap:var(--gp);border:3px solid #E53935;border-ra
 .card.full{padding:0;gap:0;border-bottom:0;overflow:hidden}
 .card.full .bar,.card.full .skyw{display:none}
 .card.full .stage{position:absolute;inset:0;padding:0;gap:0;overflow:hidden;border-radius:inherit}
-.endp{position:absolute;inset:0}.endp .med{position:absolute;inset:0;min-height:0;border-radius:0}
-.endb{position:absolute;left:0;right:0;bottom:clamp(14px,3.4vh,30px);z-index:2;display:flex;flex-direction:column;align-items:center;gap:12px}
-.endb .go{font:600 clamp(15px,1.8vw,20px) var(--gf);letter-spacing:0;border-radius:22px;padding:18px 28px;width:min(70%,560px);background:#D9702F;box-shadow:0 10px 24px -8px #d9661a99}
-.endb .lnk{border:0;background:none;font:500 clamp(14px,1.5vw,17px) var(--gf);color:#2b2b2b;text-decoration:underline;cursor:pointer;padding:4px 8px}
+.endp{position:absolute;inset:0}.endp .med{position:absolute;inset:0;min-height:0;border-radius:0;background:transparent}
+/* gambar penutup tampil UTUH: kartu mengikuti rasio asli file (--er diisi JS dari ukuran asli gambar), jadi tidak ada yang ter-crop */
+.endp .med img,.endp .med video{object-fit:contain}
+.card.endc{--er:1.7778;background:#F8EEE9;width:min(96vw,calc(96vh*var(--er)));height:auto;aspect-ratio:var(--er)}
+@media(max-width:820px){.card.endc{width:min(100vw,calc(100dvh*var(--er)))}}
+/* tombol kembali: bulat oranye, pojok kiri atas; tombol ulangi: pojok kanan atas (tidak menutupi gambar) */
+.endp .nv{position:absolute;left:clamp(12px,2vw,24px);top:clamp(12px,2vw,24px);z-index:3}
+.endp .lnk{position:absolute;right:clamp(12px,2vw,24px);top:clamp(12px,2vw,24px);z-index:3;border:0;border-radius:99px;background:#ffffffe6;font:500 clamp(13px,1.4vw,16px) var(--gf);color:#2b2b2b;cursor:pointer;padding:10px 16px;box-shadow:0 3px 10px #0003}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
 /* ===== DROPDOWN VOLUME (tombol speaker) ===== */
 #vp{position:absolute;right:calc(var(--pad) + 60px);top:86px;width:min(250px,calc(100vw - 28px));background:#fff;border:3px solid var(--bd);border-radius:16px;padding:14px;display:none;flex-direction:column;gap:14px;z-index:5;font-size:13px}#vp.on{display:flex}
@@ -315,7 +319,7 @@ const quizData = [
       { trait:'A', text:"Bergerak cepat memeriksa pintu dan area sekitar untuk menemukan petunjuk." },
       { trait:'R', text:"Pastiin tim anggota aman dan nggak panik sebelum melakukan langkah." },
       { trait:'I', text:"Tidak buru-buru dalam mencari solusi yang tepat dan aman." },
-      { trait:'N', text:"Kumpulin tim untuk diskusi untuk menentukan langkah yang tepat." },
+      { trait:'N', text:"Kumpulin tim untuk mendiskusikan langkah yang tepat." },
       { trait:'G', text:"Tarik napas dan ajak tim tetap tenang menghadapi situasi tegang." }
     ]},
   { time:"08:50", step:2, icon:"fileText", illustration:"", eyebrow:"Tantangan 2", title:"Petunjuk Pertama",
@@ -458,7 +462,7 @@ const MEDIA={
   q7:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Soal 8 Revisi.webm',    // ILUSTRASI 14 | Tantangan 8      | .jpg/.gif/.webm | taro URL disini
   q8:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (9).webm',    // ILUSTRASI 15 | Tantangan 9      | .jpg/.gif/.webm | taro URL disini
   door:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Key Motion Revisi.webm',   // ILUSTRASI 16 | Halaman pintu (setelah Tantangan 9) | taro URL disini
-  end:'',   // ILUSTRASI 17 | Halaman PENUTUP (full layar; ilustrasi 'Terima Kasih' + kontak) | .jpg/.png/.webp/.gif/.webm
+  end:'asset/Personality Quiz/endingpage.png',   // ILUSTRASI 17 | Halaman PENUTUP (full layar; ilustrasi 'Terima Kasih' + kontak) | .jpg/.png/.webp/.gif/.webm
   // --- IKON MODAL CHECKPOINT (kosong = pakai emoji bawaan) ---
   c0:'',    // IKON MODAL 1 | setelah Tantangan 1 | .png/.gif/.webm | taro URL disini
   c1:'',    // IKON MODAL 2 | setelah Tantangan 2 | taro URL disini
@@ -587,23 +591,23 @@ function decodeGifLastFrame(buf){
    Kosong ('') = halaman itu tanpa suara.
    ===================================================================== */
 const SND={
-  intro:'asset/Personality Quiz/Sound/Adventure_Pending.mp3', // SOUND 1  | BGM Intro + Rules (SATU lagu untuk 2 halaman, lanjut tanpa putus/restart) | .mp3/.ogg | taro URL disini
-  p0:'',    // SOUND 3  | BGM Prolog 1     | taro URL disini
-  p1:'',    // SOUND 4  | BGM Prolog 2 hal. 1 | taro URL disini
-  p2:'',    // SOUND 5  | BGM Prolog 2 hal. 2 | taro URL disini
-  p3:'',    // SOUND 6  | BGM Prolog 3     | taro URL disini
-  q0:'',    // SOUND 7  | BGM Tantangan 1  | taro URL disini
-  q1:'',    // SOUND 8  | BGM Tantangan 2  | taro URL disini
-  q2:'',    // SOUND 9  | BGM Tantangan 3  | taro URL disini
-  q3:'',    // SOUND 10 | BGM Tantangan 4  | taro URL disini
-  q4:'',    // SOUND 11 | BGM Tantangan 5  | taro URL disini
-  q5:'',    // SOUND 12 | BGM Tantangan 6  | taro URL disini
-  q6:'',    // SOUND 13 | BGM Tantangan 7  | taro URL disini
-  q7:'',    // SOUND 14 | BGM Tantangan 8  | taro URL disini
-  q8:'',    // SOUND 15 | BGM Tantangan 9  | taro URL disini
+  intro:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3', // SOUND 1  | BGM Intro + Rules (SATU lagu untuk 2 halaman, lanjut tanpa putus/restart) | .mp3/.ogg | taro URL disini
+  p0:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 3  | BGM Prolog 1     | taro URL disini
+  p1:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 4  | BGM Prolog 2 hal. 1 | taro URL disini
+  p2:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 5  | BGM Prolog 2 hal. 2 | taro URL disini
+  p3:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 6  | BGM Prolog 3     | taro URL disini
+  q0:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 7  | BGM Tantangan 1  | taro URL disini
+  q1:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 8  | BGM Tantangan 2  | taro URL disini
+  q2:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 9  | BGM Tantangan 3  | taro URL disini
+  q3:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 10 | BGM Tantangan 4  | taro URL disini
+  q4:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 11 | BGM Tantangan 5  | taro URL disini
+  q5:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 12 | BGM Tantangan 6  | taro URL disini
+  q6:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 13 | BGM Tantangan 7  | taro URL disini
+  q7:'asset/Personality Quiz/Sound/prolog-8.mpeg',    // SOUND 14 | BGM Tantangan 8  | taro URL disini
+  q8:'asset/Personality Quiz/Sound/9-end.mpeg',    // SOUND 15 | BGM Tantangan 9  | taro URL disini
   door:'',  // SOUND 16 | BGM Halaman pintu | taro URL disini
-  res:'',   // SOUND 17 | BGM Halaman Hasil | taro URL disini
-  end:'',   // SOUND 17b | BGM Halaman Penutup | taro URL disini
+  res:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3',   // SOUND 17 | BGM Halaman Hasil | taro URL disini
+  end:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3',   // SOUND 17b | BGM Halaman Penutup | taro URL disini
   cp:'',    // SOUND 18 | SFX modal checkpoint (bunyi sekali tiap modal muncul) | taro URL disini
   click:'', // SOUND 19 | SFX klik tombol | taro URL disini (kosong = bunyi sintetis bawaan)
   hover:'', // SOUND 20 | SFX hover tombol/opsi | kosong = bunyi sintetis bawaan
@@ -676,7 +680,12 @@ function fadeTo(to,ms){cancelAnimationFrame(fadeRaf);const f=fade,t0=performance
 (function r(){const k=ms>0?Math.max(0,Math.min(1,(performance.now()-t0)/ms)):1;fade=f+(to-f)*k;bgm.volume=mv();VID.forEach(x=>{x.volume=Math.min(1,dv()*(x._lf||1))});if(k<1)fadeRaf=requestAnimationFrame(r)})()}
 const VID=new Set();   /* semua <video> yang lagi/pernah diputar (supaya bisa di-mute / dimatikan walau sudah lepas dari halaman) */
 const key=p=>p.k=='pro'?'p'+p.i:p.k=='q'?'q'+p.i:p.k;
-function play(k){if(k=='rules')k='intro';const s=SND[k]||BGM_MAIN;if(!s){bgm.pause();bgmSrc='';return}if(bgmSrc!==s){bgmSrc=s;bgm.src=s}bgm.muted=!!muted;bgm.volume=mv();bgm.play().catch(()=>{})}
+/* detik mulai BGM per halaman (0 / tidak diisi = dari awal). Contoh: res:9 = BGM Hasil mulai di detik 9 dan ikut kembali ke detik 9 saat looping */
+const BGM_START={res:9};let bgmStart=0;
+bgm.addEventListener('ended',()=>{if(bgmStart){try{bgm.currentTime=bgmStart}catch(e){}bgm.play().catch(()=>{})}});
+function play(k){if(k=='rules')k='intro';const s=SND[k]||BGM_MAIN;if(!s){bgm.pause();bgmSrc='';return}const st=BGM_START[k]||0;bgmStart=st;bgm.loop=!st;
+if(bgmSrc!==s){bgmSrc=s;bgm.src=s;if(st)bgm.addEventListener('loadedmetadata',()=>{try{bgm.currentTime=st}catch(e){}},{once:true})}
+bgm.muted=!!muted;bgm.volume=mv();bgm.play().catch(()=>{})}
 /* muted = MUTE ALL | musicVol = BGM | mediaVol = suara UI + suara webm */
 function applyAudio(){bgm.muted=!!muted;bgm.volume=mv();VID.forEach(x=>{x.muted=!!muted||!!x.dataset.ns;x.volume=Math.min(1,dv()*(x._lf||1))});
 $('snd').innerHTML=muted||(musicVol<=0&&mediaVol<=0)?MU:SP;
@@ -727,7 +736,7 @@ rules:()=>`<div class="col"><div class="row"><div class="bub">Ada 9 tantangan ya
 pro:p=>`<div class="sp fill"><div class="med">${m('p'+p.i,'Ilustrasi '+PRO_LBL[p.i])}</div><div class="col g${PRO[p.i].length>2?' c3':''}">${p.i==3?`<div class="bub big"><div class="ib">⚠️</div><span>${PRO[3][0]}</span></div>`:PRO[p.i].map(t=>`<div class="bub big${t=='OFFICE LOCKDOWN'?' lkd':''}">${t}</div>`).join('')}${p.i==2?warnHTML():''}</div></div>`,
 q:p=>{const q=quizData[p.i];return `<div class="qg"><div class="lf"><div class="med">${m('q'+p.i,'Ilustrasi Tantangan '+(p.i+1))}</div><p class="sc">${q.text}</p></div><div class="rt"><h3>${q.q}</h3><div class="opts">${ord[p.i].map(t=>`<button class="op${A[p.i]==t?' sel':''}" data-t="${t}">${q.options.find(x=>x.trait==t).text}</button>`).join('')}</div></div></div>`},
 door:()=>`<div class="med dr">${m('door','Ilustrasi Pintu Keluar')}</div>`,
-end:()=>`<div class="endp"><div class="med">${m('end','Ilustrasi Penutup')}</div><div class="endb"><button class="go" id="bk">Lihat Hasil Kembali</button><button class="lnk" id="rs">↺ Ulangi Simulasi</button></div></div>`,
+end:()=>`<div class="endp"><div class="med">${m('end','Ilustrasi Penutup')}</div><button class="nv" id="bk" aria-label="Kembali ke hasil">${CH}</button><button class="lnk" id="rs">↺ Ulangi Simulasi</button></div>`,
 res:()=>{const t=prim(),c=characterData[t],src=POSTER[t],n=TR.indexOf(t)+1;return `<div class="sp rs"><div class="rl t-${t}" style="background:${c.hex}"><small>KARAKTER DOMINAN KAMU</small><h1>${c.name.toUpperCase()}</h1><div class="bts"><button class="go" id="dl">⬇ DOWNLOAD HASIL</button><button class="go sec" id="rs">ULANGI</button></div></div><div class="med pf" id="pf">${src?`<img src="${src}" alt="Poster ${c.name}">`:`<div class="ph"><span><b>POSTER ${n}</b><br>${c.name}<small>.png / .jpg / .webp (rasio 9:16)<br>taro URL disini → POSTER.${t}</small></span></div>`}<div class="nmo"><small>SELAMAT!</small><b>${name}</b></div></div></div>`}
 };
 /* ===== SKY, HEADER, CLOCK ===== */
@@ -742,11 +751,13 @@ $('t1').textContent=a;$('t2').textContent=b;$('trk').style.visibility=tr?'visibl
 $('clk').style.visibility=t?'visible':'hidden';if(t)tick(t)}
 function fitHero(){const e=$('hero').querySelector('img,video');if(!e)return;const set=()=>{const w=e.naturalWidth||e.videoWidth,h=e.naturalHeight||e.videoHeight;if(w&&h)$('card').style.setProperty('--har',(w/h).toFixed(4))};
 if(e.tagName=='IMG'?(e.complete&&e.naturalWidth):e.readyState>=1)set();else e.addEventListener(e.tagName=='IMG'?'load':'loadedmetadata',set,{once:true})}
+function fitEnd(){const e=document.querySelector('.endp .med img,.endp .med video');if(!e)return;const set=()=>{const w=e.naturalWidth||e.videoWidth,h=e.naturalHeight||e.videoHeight;if(w&&h)$('card').style.setProperty('--er',(w/h).toFixed(4))};
+if(e.tagName=='IMG'?(e.complete&&e.naturalWidth):e.readyState>=1)set();else e.addEventListener(e.tagName=='IMG'?'load':'loadedmetadata',set,{once:true})}
 const SPLIT={intro:'Ilustrasi Intro',rules:'Ilustrasi Rules'},NAVP={rules:1,pro:1,q:1,door:1};
 function draw(){const p=P[pi],s=$('stage'),c=$('card'),h=$('hero'),nb=$('navbar'),sp=!!SPLIT[p.k],was=c.classList.contains('split');
 hushVideos();rotReset();hdr(p);sky(p);play(key(p));s.className='stage out';nb.classList.add('out');h.classList.add('out');if(sp!==was)c.classList.add('chg');
-setTimeout(()=>{c.classList.toggle('split',sp);c.classList.toggle('ttc',p.k=='intro'||p.k=='rules'||p.k=='pro'||p.k=='res');c.classList.toggle('res',p.k=='res');if(p.k=='res'){const t=prim();c.dataset.t=t;c.style.setProperty('--rc',characterData[t].hex)}c.classList.toggle('full',p.k=='end'||p.k=='door');c.classList.toggle('dor',p.k=='door');killVideos();const mob=matchMedia('(max-width:820px)').matches;h.innerHTML=sp&&!mob?m(p.k,SPLIT[p.k]):'';if(sp&&!mob)fitHero();sdDone=0;s.innerHTML=(sp&&mob?`<div class="med mh">${m(p.k,SPLIT[p.k])}</div>`:'')+V[p.k](p);s.scrollTop=0;nb.innerHTML=NAVP[p.k]?nav():p.k=='res'?'<button class="go" id="ce">LANJUT KE HALAMAN PENUTUP ▶</button>':'';
-const bgmOnly=(p.k=='intro'||p.k=='rules')&&!!(SND.intro||BGM_MAIN);document.querySelectorAll('.med video,.hero video').forEach(v=>{if(bgmOnly)v.dataset.ns=1;if(v.hasAttribute('data-door')&&doorGate()){VID.add(v);rot.hold=1;return}vplay(v)});if(p.k=='door'){doorWatch();rotUpdate()}if(p.k=='res'){const im=document.querySelector('#pf img');fitPoster();if(im&&!(im.complete&&im.naturalWidth))im.addEventListener('load',fitPoster,{once:true});requestAnimationFrame(fitPoster)}s.className='stage';hint();setTimeout(hint,350);nb.className='nav'+(NAVP[p.k]||p.k=='res'?'':' off')+(p.k=='res'?' wide':'');h.classList.remove('out');s.scrollTop=0;requestAnimationFrame(()=>c.classList.remove('chg'))},230);save()}
+setTimeout(()=>{c.classList.toggle('split',sp);c.classList.toggle('ttc',p.k=='intro'||p.k=='rules'||p.k=='pro'||p.k=='res');c.classList.toggle('res',p.k=='res');if(p.k=='res'){const t=prim();c.dataset.t=t;c.style.setProperty('--rc',characterData[t].hex)}c.classList.toggle('full',p.k=='end'||p.k=='door');c.classList.toggle('dor',p.k=='door');c.classList.toggle('endc',p.k=='end');killVideos();const mob=matchMedia('(max-width:820px)').matches;h.innerHTML=sp&&!mob?m(p.k,SPLIT[p.k]):'';if(sp&&!mob)fitHero();sdDone=0;s.innerHTML=(sp&&mob?`<div class="med mh">${m(p.k,SPLIT[p.k])}</div>`:'')+V[p.k](p);s.scrollTop=0;nb.innerHTML=NAVP[p.k]?nav():p.k=='res'?'<button class="go" id="ce">LANJUT KE HALAMAN PENUTUP ▶</button>':'';
+if(p.k=='end')fitEnd();const bgmOnly=(p.k=='intro'||p.k=='rules')&&!!(SND.intro||BGM_MAIN);document.querySelectorAll('.med video,.hero video').forEach(v=>{if(bgmOnly)v.dataset.ns=1;if(v.hasAttribute('data-door')&&doorGate()){VID.add(v);rot.hold=1;return}vplay(v)});if(p.k=='door'){doorWatch();rotUpdate()}if(p.k=='res'){const im=document.querySelector('#pf img');fitPoster();if(im&&!(im.complete&&im.naturalWidth))im.addEventListener('load',fitPoster,{once:true});requestAnimationFrame(fitPoster)}s.className='stage';hint();setTimeout(hint,350);nb.className='nav'+(NAVP[p.k]||p.k=='res'?'':' off')+(p.k=='res'?' wide':'');h.classList.remove('out');s.scrollTop=0;requestAnimationFrame(()=>c.classList.remove('chg'))},230);save()}
 /* ===== VIDEO BERSUARA + PINTU → FLASH → HASIL ===== */
 const DOOR_LEAD=.2,         /* flash dimulai sekian DETIK sebelum video pintu selesai */
       DOOR_FLASH_HOLD=450,  /* lama layar putih penuh (ms) saat pindah ke hasil */
