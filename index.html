@@ -304,7 +304,30 @@ display:flex;align-items:center;gap:var(--gp);border:3px solid #E53935;border-ra
 .med.mh img,.med.mh video{max-height:none}
 
 }
+
+/* ===== LOADER / PRELOAD SCREEN (satu tema: krem + oranye + Handjet, logo jalan di track progress ala header) ===== */
+#ld{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:linear-gradient(160deg,#EDE7DC,#EDE7DC 55%,#E3DACB);transition:opacity .6s ease,visibility .6s}
+#ld.out{opacity:0;visibility:hidden;pointer-events:none}
+.ldc{width:min(88vw,460px);background:#F8EEE9;border-radius:28px;border-bottom:6px solid var(--o);padding:clamp(22px,5vw,38px);display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;box-shadow:0 30px 60px -30px #0005;animation:in .5s both}
+.ldc .lg{width:76px;height:76px;border-radius:22px;animation:ldb 1.3s ease-in-out infinite}
+@keyframes ldb{50%{transform:translateY(-8px)}}
+.ldt{font:700 clamp(32px,9vw,44px)/1 var(--px);letter-spacing:.04em;color:var(--ink)}
+.ldt span{color:#D9661A}
+.lds{font:500 clamp(12.5px,3.4vw,14px)/1.5 var(--gf);max-width:30ch}
+.ldk{position:relative;height:30px;width:calc(100% - 28px);margin:6px 14px 0}
+.ldk:before{content:'';position:absolute;left:0;right:0;top:calc(50% - 1.5px);height:3px;border-radius:2px;background:#F28A3040}
+.ldk i{position:absolute;left:0;top:calc(50% - 1.5px);height:3px;border-radius:2px;background:var(--o);width:0}
+.ldk u{position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:#F28A3066;transform:translate(-50%,-50%);transition:background .3s}
+.ldk u.on{background:var(--o)}
+.ldk img{position:absolute;z-index:1;top:50%;left:0;width:30px;height:30px;border-radius:50%;border:2px solid var(--g);background:#fff;transform:translate(-50%,-50%);object-fit:contain}
+.ldp{font:700 clamp(26px,7vw,34px)/1 var(--px);letter-spacing:.06em;color:#D9661A}
+.ldn{font:400 12px/1.4 var(--gf);opacity:.65;min-height:1.4em}
+#ldgo{display:none}
+#ld.rdy #ldgo{display:block;animation:in .45s both}
+#ld.rdy .ldn,#ld.rdy .ldk{opacity:.5}
 </style></head><body>
+<div id="ld" role="status" aria-live="polite"><div class="ldc"><img class="lg" src="logo.png" alt=""><div class="ldt">LOADING<span id="lddots">...</span></div><div class="lds" id="ldmsg">Menyiapkan ruangan, musik, dan ilustrasi. Tunggu sampai 100% ya biar mainnya mulus!</div><div class="ldk" id="ldk"><i id="ldbar"></i><u style="left:0%"></u><u style="left:12.5%"></u><u style="left:25%"></u><u style="left:37.5%"></u><u style="left:50%"></u><u style="left:62.5%"></u><u style="left:75%"></u><u style="left:87.5%"></u><u style="left:100%"></u><img id="ldav" src="logo.png" alt=""></div><div class="ldp" id="ldpct">0%</div><div class="ldn" id="ldn">Memuat aset...</div><button class="go" id="ldgo">MULAI</button></div></div>
+
 <div class="sun" id="sun"></div>
 <main class="card" id="card">
 <div class="skyw"><i id="skysun"></i></div><div class="hero" id="hero"></div>
@@ -602,7 +625,7 @@ function decodeGifLastFrame(buf){
    Kosong ('') = halaman itu tanpa suara.
    ===================================================================== */
 /* SATU file BGM untuk Prolog 1 s/d Tantangan 8 (ganti di sini saja; Tantangan 9 punya lagu sendiri di SND.q8) */
-const BGM_STORY='asset/Personality Quiz/Sound/prolog-8.mpeg';
+const BGM_STORY='asset/Personality Quiz/Sound/prolog-8.mp3';
 const SND={
   intro:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3', // SOUND 1  | BGM Intro + Rules (SATU lagu untuk 2 halaman, lanjut tanpa putus/restart) | .mp3/.ogg | taro URL disini
   p0:BGM_STORY,    // SOUND 3  | BGM Prolog 1     | taro URL disini
@@ -617,7 +640,7 @@ const SND={
   q5:BGM_STORY,    // SOUND 12 | BGM Tantangan 6  | taro URL disini
   q6:BGM_STORY,    // SOUND 13 | BGM Tantangan 7  | taro URL disini
   q7:BGM_STORY,    // SOUND 14 | BGM Tantangan 8  | taro URL disini
-  q8:'asset/Personality Quiz/Sound/9-end.mpeg',    // SOUND 15 | BGM Tantangan 9  | taro URL disini
+  q8:'asset/Personality Quiz/Sound/9-end.mp3',    // SOUND 15 | BGM Tantangan 9  | taro URL disini
   door:'',  // SOUND 16 | BGM Halaman pintu | taro URL disini
   res:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3',   // SOUND 17 | BGM Halaman Hasil | taro URL disini
   end:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3',   // SOUND 17b | BGM Halaman Penutup | taro URL disini
@@ -970,5 +993,39 @@ if(window.ResizeObserver)new ResizeObserver(syncSky).observe(document.querySelec
 addEventListener('resize',syncSky);addEventListener('orientationchange',syncSky);
 matchMedia('(max-width:820px)').addEventListener('change',syncSky);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(syncSky);
-setM(muted);draw();
+setM(muted);
+
+/* =====================================================================
+   LOADER / PRELOAD — semua aset (gambar, gif, webm, audio, font) dimuat dulu, baru tombol MULAI muncul.
+   - Daftar aset diambil OTOMATIS dari MEDIA, POSTER, SND, KEYMEDIA, characterData, POPUP (nggak perlu didaftar ulang).
+   - Tiap aset punya batas waktu (LD_TIMEOUT) + kalau gagal tetap dilewati, jadi loader tidak akan macet selamanya.
+   - Tombol MULAI = gesture pertama user, jadi musik (BGM) langsung bisa jalan tanpa diblokir browser.
+   ===================================================================== */
+(function(){
+const LD_TIMEOUT=45000,LD_PARALLEL=6,IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const set=new Set(['logo.png']),add=s=>{if(s&&typeof s==='string')set.add(s)};
+Object.values(MEDIA).forEach(add);Object.values(POSTER).forEach(add);Object.values(SND).forEach(add);Object.values(KEYMEDIA).forEach(add);
+add(STAR_IMG);add(BGM_STORY);add(BGM_MAIN);Object.values(characterData).forEach(c=>add(c.img));Object.values(POPUP).forEach(p=>add(p.img));
+const list=[...set],total=list.length;
+const kind=u=>/\.(webm|mp4)(\?|$)/i.test(u)?'video':/\.(mp3|ogg|wav|mpeg|m4a|aac)(\?|$)/i.test(u)?'audio':'img';
+let done=0,failed=[];
+function loadOne(u){return new Promise(res=>{let fin=0;const end=ok=>{if(fin)return;fin=1;clearTimeout(t);if(!ok)failed.push(u);res()},t=setTimeout(()=>end(false),LD_TIMEOUT),k=kind(u);
+if(k=='img'){const i=new Image();i.onload=()=>{(i.decode?i.decode():Promise.resolve()).then(()=>end(true),()=>end(true))};i.onerror=()=>end(false);i.src=u}
+else{const e=document.createElement(k);e.preload='auto';e.muted=true;e.setAttribute('playsinline','');e.addEventListener(IOS?'loadedmetadata':'canplaythrough',()=>end(true),{once:true});e.onerror=()=>end(false);e.src=u;e.load()}})}
+const fonts=()=>Promise.all(['700 24px Handjet','900 24px Handjet','400 15px "Geist Pixel"','24px "Archivo Black"'].map(f=>document.fonts?document.fonts.load(f).catch(()=>{}):0)).then(()=>document.fonts&&document.fonts.ready).catch(()=>{});
+function runQueue(){let n=0;const w=()=>n>=total?Promise.resolve():loadOne(list[n++]).then(()=>{done++}).then(w);return Promise.all(Array.from({length:Math.min(LD_PARALLEL,total)},w))}
+const $l=id=>document.getElementById(id),ld=$l('ld'),bar=$l('ldbar'),av=$l('ldav'),pct=$l('ldpct'),nn=$l('ldn'),dots=[...document.querySelectorAll('#ldk u')];
+let shown=0,ready=0,dotT=0,fin=0;
+/* animasi titik-titik "LOADING..." */
+const dt=$l('lddots');dotT=setInterval(()=>{dt.textContent='.'.repeat(1+(Date.now()/350|0)%3)},350);
+function paint(){const target=ready?100:Math.min(99,done/total*100);shown+=(target-shown)*.12;if(target-shown<.4)shown=target;
+const v=Math.round(shown);pct.textContent=v+'%';bar.style.width=shown+'%';av.style.left=shown+'%';dots.forEach((d,i)=>d.classList.toggle('on',shown>=i*12.5-.01));
+nn.textContent=ready?'Semua aset siap!':'Memuat aset '+Math.min(done,total)+' / '+total;
+if(ready&&shown>=100){finish();return}requestAnimationFrame(paint)}
+function finish(){if(fin)return;fin=1;clearInterval(dotT);dt.textContent='';$l('ldmsg').textContent=failed.length?'Hampir semua siap. Ada '+failed.length+' file yang gagal dimuat (cek console), tapi kamu tetap bisa lanjut.':'Semuanya sudah siap. Tekan MULAI untuk masuk ke ruangan!';ld.classList.add('rdy');$l('ldgo').focus({preventScroll:true});if(failed.length)console.warn('Aset gagal dimuat:',failed)}
+$l('ldgo').addEventListener('click',()=>{primeAC();ld.classList.add('out');setTimeout(()=>ld.remove(),700);draw()});
+/* biar nggak mulai sebelum layar siap, tunggu font + semua aset */
+Promise.all([fonts(),runQueue()]).then(()=>{ready=1});
+requestAnimationFrame(paint);
+})();
 </script></body></html>
