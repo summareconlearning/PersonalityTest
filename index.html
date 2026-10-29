@@ -779,8 +779,8 @@ const $=i=>document.getElementById(i),TR=['C','A','R','I','N','G'];
    Kosong ('') = tampil kotak putus-putus bertuliskan nomor ilustrasinya.
    ===================================================================== */
 const MEDIA={
-  intro:'gifDisclaimer.gif', // ILUSTRASI 1  | Intro            | .jpg/.gif/.webm | taro URL disini
-  rules:'gifProlog.gif', // ILUSTRASI 2  | Rules            | .jpg/.gif/.webm | taro URL disini
+  intro:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/gifDisclaimer.gif', // ILUSTRASI 1  | Intro            | .jpg/.gif/.webm | taro URL disini
+  rules:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/gifProlog.gif', // ILUSTRASI 2  | Rules            | .jpg/.gif/.webm | taro URL disini
   p0:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 1 Cut.webm',    // ILUSTRASI 3  | Prolog 1         | .jpg/.gif/.webm | taro URL disini
   p1:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 2 Cut.webm',    // ILUSTRASI 4  | Prolog 2 - hal. 1 (1 bubble teks) | .jpg/.gif/.webm | taro URL disini
   p2:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 3 Cut.webm',    // ILUSTRASI 5  | Prolog 2 - hal. 2 (2 bubble atas-bawah + KEY) | .jpg/.gif/.webm | taro URL disini
@@ -822,12 +822,12 @@ document.addEventListener('error',e=>{const v=e.target;if(v&&v.tagName=='VIDEO'&
    Kosong ('') = tampil kotak placeholder bertuliskan nomor posternya.
    ===================================================================== */
 const POSTER={
-  C:'bgmerah.gif', // POSTER 1 | Commitment    | taro URL disini
-  A:'bgkuning.gif', // POSTER 2 | Agility       | taro URL disini
-  R:'bgpink.gif', // POSTER 3 | Care          | taro URL disini
-  I:'bgbiru.gif', // POSTER 4 | Integrity     | taro URL disini
-  N:'bgungu.gif', // POSTER 5 | Collaboration | taro URL disini
-  G:'bghijau.gif'  // POSTER 6 | Gratitude     | taro URL disini
+  C:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/bgmerah.gif', // POSTER 1 | Commitment    | taro URL disini
+  A:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/bgkuning.gif', // POSTER 2 | Agility       | taro URL disini
+  R:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/bgpink.gif', // POSTER 3 | Care          | taro URL disini
+  I:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/bgbiru.gif', // POSTER 4 | Integrity     | taro URL disini
+  N:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/bgungu.gif', // POSTER 5 | Collaboration | taro URL disini
+  G:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/bghijau.gif'  // POSTER 6 | Gratitude     | taro URL disini
 };
 /* =====================================================================
    ASET "DOOR IS LOCKED!" (Prolog 2 hal. 2): pintu muncul -> bergetar (nyoba dibuka, nggak bisa) -> teks DOOR IS LOCKED.
@@ -923,7 +923,7 @@ function decodeGifLastFrame(buf){
    Kosong ('') = halaman itu tanpa suara.
    ===================================================================== */
 /* SATU file BGM untuk Prolog 1 s/d Tantangan 8 (ganti di sini saja; Tantangan 9 punya lagu sendiri di SND.q8) */
-const BGM_STORY='asset/Personality Quiz/Sound/prolog-8.mp3';
+const BGM_STORY='https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/Sound/prolog-8.mp3';
 const SND={
   intro:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/Sound/Quiz%20Time%20Nook.mp3', // SOUND 1  | BGM Intro + Rules (SATU lagu untuk 2 halaman, lanjut tanpa putus/restart) | .mp3/.ogg | taro URL disini
   p0:BGM_STORY,    // SOUND 3  | BGM Prolog 1     | taro URL disini
@@ -938,10 +938,10 @@ const SND={
   q5:BGM_STORY,    // SOUND 12 | BGM Tantangan 6  | taro URL disini
   q6:BGM_STORY,    // SOUND 13 | BGM Tantangan 7  | taro URL disini
   q7:BGM_STORY,    // SOUND 14 | BGM Tantangan 8  | taro URL disini
-  q8:'asset/Personality Quiz/Sound/9-end.mp3',    // SOUND 15 | BGM Tantangan 9  | taro URL disini
+  q8:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/Sound/9-end.mp3',    // SOUND 15 | BGM Tantangan 9  | taro URL disini
   door:'',  // SOUND 16 | BGM Halaman pintu | taro URL disini
-  res:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3',   // SOUND 17 | BGM Halaman Hasil | taro URL disini
-  end:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3',   // SOUND 17b | BGM Halaman Penutup | taro URL disini
+  res:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/Sound/Quiz%20Time%20Nook.mp3',   // SOUND 17 | BGM Halaman Hasil | taro URL disini
+  end:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/Sound/Quiz%20Time%20Nook.mp3',   // SOUND 17b | BGM Halaman Penutup | taro URL disini
   cp:'',    // SOUND 18 | SFX modal checkpoint (bunyi sekali tiap modal muncul) | taro URL disini
   click:'', // SOUND 19 | SFX klik tombol | taro URL disini (kosong = bunyi sintetis bawaan)
   hover:'', // SOUND 20 | SFX hover tombol/opsi | kosong = bunyi sintetis bawaan
@@ -987,7 +987,7 @@ const POPUP={
    Kosong ('') / file belum ada = pakai SFX bawaan SND.cp.
    ===================================================================== */
 const MODAL_SND={
-  p3:'asset/Personality Quiz/Sound/Apakah kamu siap_.mp3',   // "Apakah Kamu Sudah Siap?"
+  p3:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/Sound/Apakah%20kamu%20siap_.mp3',   // "Apakah Kamu Sudah Siap?"
   p2:'',
   q0:'',        // setelah Tantangan 1
   q1:'',        // setelah Tantangan 2
