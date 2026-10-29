@@ -795,7 +795,7 @@ const MEDIA={
   q7:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Soal 8 Revisi.webm',    // ILUSTRASI 14 | Tantangan 8      | .jpg/.gif/.webm | taro URL disini
   q8:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Soal 9 revisi.webm',    // ILUSTRASI 15 | Tantangan 9      | .jpg/.gif/.webm | taro URL disini
   door:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Key motion 2 revisi - Trim.webm',   // ILUSTRASI 16 | Halaman pintu (setelah Tantangan 9) | taro URL disini
-  end:'asset/Personality Quiz/endingpage.png',   // ILUSTRASI 17 | Halaman PENUTUP (full layar; ilustrasi 'Terima Kasih' + kontak) | .jpg/.png/.webp/.gif/.webm
+  end:'asset/Personality Quiz/endingpage.jpeg',   // ILUSTRASI 17 | Halaman PENUTUP (full layar; ilustrasi 'Terima Kasih' + kontak) | .jpg/.png/.webp/.gif/.webm
   // --- IKON MODAL CHECKPOINT (kosong = pakai emoji bawaan) ---
   c0:'',    // IKON MODAL 1 | setelah Tantangan 1 | .png/.gif/.webm | taro URL disini
   c1:'',    // IKON MODAL 2 | setelah Tantangan 2 | taro URL disini
@@ -925,7 +925,7 @@ function decodeGifLastFrame(buf){
 /* SATU file BGM untuk Prolog 1 s/d Tantangan 8 (ganti di sini saja; Tantangan 9 punya lagu sendiri di SND.q8) */
 const BGM_STORY='asset/Personality Quiz/Sound/prolog-8.mp3';
 const SND={
-  intro:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3', // SOUND 1  | BGM Intro + Rules (SATU lagu untuk 2 halaman, lanjut tanpa putus/restart) | .mp3/.ogg | taro URL disini
+  intro:'https://s3-id-jkt-1.kilatstorage.id/image-vid-sl/JPG-PNG-GIF/GIF/Personality%20Quiz/Sound/Quiz%20Time%20Nook.mp3', // SOUND 1  | BGM Intro + Rules (SATU lagu untuk 2 halaman, lanjut tanpa putus/restart) | .mp3/.ogg | taro URL disini
   p0:BGM_STORY,    // SOUND 3  | BGM Prolog 1     | taro URL disini
   p1:BGM_STORY,    // SOUND 4  | BGM Prolog 2 hal. 1 | taro URL disini
   p2:BGM_STORY,    // SOUND 5  | BGM Prolog 2 hal. 2 | taro URL disini
@@ -988,17 +988,17 @@ const POPUP={
    ===================================================================== */
 const MODAL_SND={
   p3:'asset/Personality Quiz/Sound/Apakah kamu siap_.mp3',   // "Apakah Kamu Sudah Siap?"
-  p2:'asset/Personality Quiz/Sound/Modal/p2.mp3',
-  q0:'asset/Personality Quiz/Sound/Modal/q0.mp3',        // setelah Tantangan 1
-  q1:'asset/Personality Quiz/Sound/Modal/q1.mp3',        // setelah Tantangan 2
-  q2:'asset/Personality Quiz/Sound/Modal/q2.mp3',        // setelah Tantangan 3
-  q3:'asset/Personality Quiz/Sound/Modal/q3.mp3',        // setelah Tantangan 4
-  q4:'asset/Personality Quiz/Sound/Modal/q4.mp3',        // setelah Tantangan 5
-  q5:'asset/Personality Quiz/Sound/Modal/q5.mp3',        // setelah Tantangan 6
-  q6:'asset/Personality Quiz/Sound/Modal/q6.mp3',        // setelah Tantangan 7
-  q7:'asset/Personality Quiz/Sound/Modal/q7.mp3',        // setelah Tantangan 8
-  q8:'asset/Personality Quiz/Sound/Modal/q8.mp3',        // setelah Tantangan 9
-  door:'asset/Personality Quiz/Sound/Modal/door.mp3'     // "Misi Berhasil!"
+  p2:'',
+  q0:'',        // setelah Tantangan 1
+  q1:'',        // setelah Tantangan 2
+  q2:'',        // setelah Tantangan 3
+  q3:'',        // setelah Tantangan 4
+  q4:'',        // setelah Tantangan 5
+  q5:'',        // setelah Tantangan 6
+  q6:'',        // setelah Tantangan 7
+  q7:'',        // setelah Tantangan 8
+  q8:'',        // setelah Tantangan 9
+  door:''     // "Misi Berhasil!"
 };
 let mSnd=null;const stopMSnd=()=>{if(mSnd){try{mSnd.pause()}catch(e){}mSnd=null}};
 function playMSnd(k){stopMSnd();if(muted)return;const u=MODAL_SND[k];if(!u){sfx('cp');return}
