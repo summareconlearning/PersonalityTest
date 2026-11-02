@@ -664,18 +664,18 @@ const quizData = [
       { trait:'G', text:"Berpikir positif dapat menemukan petunjuk jalan keluar." }
     ]},
   { time:"08:50", step:2, icon:"fileText", illustration:"", eyebrow:"Tantangan 2", title:"Petunjuk Pertama",
-    text:"Di tengah suara alarm, tim nemu kertas berisi petunjuk pertama. Tapi isinya bikin bingung, dan tiap orang punya pemahaman sendiri.",
+    text:"Di tengah suara alarm, tim menenemukan kertas berisi petunjuk pertama. Tapi isinya bikin bingung, dan tiap orang punya pemahaman sendiri.",
     q:"Bagaimana kamu menyikapinya?",
     options:[
       { trait:'A', text:"Coba cara lain sampai ketemu yang paling gampang dipahami." },
       { trait:'C', text:"Menentukan langkah berikutnya dari petunjuk yang sudah dipahami." },
       { trait:'N', text:"Ajak semua anggota diskusi dan cari tahu maksud petunjuknya bareng-bareng." },
-      { trait:'I', text:"Pastikan petunjuknya berdasar informasi yang benar." },
+      { trait:'I', text:"Pastikan petunjuknya berdasarkan informasi yang benar." },
       { trait:'G', text:"Menghargai setiap perbedaan pemahaman anggota." },
       { trait:'R', text:"Pastikan semua anggota memahami petunjuk sebelum bertindak." }
     ]},
   { time:"09:40", step:3, icon:"alertTriangle", illustration:"", eyebrow:"Tantangan 3", title:"Rekan Butuh Bantuan",
-    text:"Setelah petunjuk pertama disepakati artinya dan tugas dibagi, ternyata ada satu anggota tim yang masih bingung dengan tugasnya.",
+    text:"Setelah petunjuk pertama dipahami bersama dan tugas dibagikan, ternyata ada satu anggota tim yang masih bingung dengan tugasnya.",
     q:"Bagaimana kamu membantunya?",
     options:[
       { trait:'C', text:"Memastikan penjelasan yang diberikan sudah benar." },
@@ -723,7 +723,7 @@ const quizData = [
     q:"Kamu pakai waktu ini buat apa?",
     options:[
       { trait:'R', text:"Pastikan semua anggota istirahat cukup." },
-      { trait:'C', text:"Mengingatkan tim tidak terlena" },
+      { trait:'C', text:"Mengingatkan tim tidak terlena dan tetap fokus" },
       { trait:'G', text:"Ngobrol santai dan apresiasi usaha tiap anggota." },
       { trait:'A', text:"Pikirkan cara alternatif kalau tantangan berikutnya lebih sulit." },
       { trait:'N', text:"Ajak tim menyusun strategi bareng untuk tantangan berikutnya." },
@@ -741,7 +741,7 @@ const quizData = [
       { trait:'G', text:"Dengar pendapat tiap anggota dan tetap optimis ada jalan terbaik." }
     ]},
   { time:"15:45", step:9, icon:"compass", illustration:"", eyebrow:"Tantangan 9", title:"Misi Berhasil!",
-    text:"Horeee! Tim akhirnya menemukan kunci akses menuju pintu keluar.",
+    text:"Horeee! Tim akhirnya menemukan akses menuju pintu keluar.",
     q:"Sebelum semuanya pulang, apa yang akan kamu lakukan bersama tim?",
     options:[
       { trait:'N', text:"Mengajak tim mengevaluasi perjalanan bersama." },
@@ -802,8 +802,8 @@ const MEDIA={
   q6:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (7).webm',    // ILUSTRASI 13 | Tantangan 7      | .jpg/.gif/.webm | taro URL disini
   q7:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Soal 8 Revisi.webm',    // ILUSTRASI 14 | Tantangan 8      | .jpg/.gif/.webm | taro URL disini
   q8:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Soal 9 revisi.webm',    // ILUSTRASI 15 | Tantangan 9      | .jpg/.gif/.webm | taro URL disini
-  door:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Key motion 2 revisi - Trim.webm',   // ILUSTRASI 16 | Halaman pintu (setelah Tantangan 9) | taro URL disini
-  end:'asset/Personality Quiz/endingpage.png',   // ILUSTRASI 17 | Halaman PENUTUP (full layar; ilustrasi 'Terima Kasih' + kontak) | .jpg/.png/.webp/.gif/.webm
+  door:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Personality Quiz Ending Revisi.webm',   // ILUSTRASI 16 | Halaman pintu (setelah Tantangan 9) | taro URL disini
+  end:'asset/Personality Quiz/endingpage.jpeg',   // ILUSTRASI 17 | Halaman PENUTUP (full layar; ilustrasi 'Terima Kasih' + kontak) | .jpg/.png/.webp/.gif/.webm
   // --- IKON MODAL CHECKPOINT (kosong = pakai emoji bawaan) ---
   c0:'',    // IKON MODAL 1 | setelah Tantangan 1 | .png/.gif/.webm | taro URL disini
   c1:'',    // IKON MODAL 2 | setelah Tantangan 2 | taro URL disini
@@ -996,17 +996,17 @@ const POPUP={
    ===================================================================== */
 const MODAL_SND={
   p3:'asset/Personality Quiz/Sound/Apakah kamu siap_.mp3',   // "Apakah Kamu Sudah Siap?"
-  p2:'asset/Personality Quiz/Sound/Modal/p2.mp3',
-  q0:'asset/Personality Quiz/Sound/Modal/q0.mp3',        // setelah Tantangan 1
-  q1:'asset/Personality Quiz/Sound/Modal/q1.mp3',        // setelah Tantangan 2
-  q2:'asset/Personality Quiz/Sound/Modal/q2.mp3',        // setelah Tantangan 3
-  q3:'asset/Personality Quiz/Sound/Modal/q3.mp3',        // setelah Tantangan 4
-  q4:'asset/Personality Quiz/Sound/Modal/q4.mp3',        // setelah Tantangan 5
-  q5:'asset/Personality Quiz/Sound/Modal/q5.mp3',        // setelah Tantangan 6
-  q6:'asset/Personality Quiz/Sound/Modal/q6.mp3',        // setelah Tantangan 7
-  q7:'asset/Personality Quiz/Sound/Modal/q7.mp3',        // setelah Tantangan 8
-  q8:'asset/Personality Quiz/Sound/Modal/q8.mp3',        // setelah Tantangan 9
-  door:'asset/Personality Quiz/Sound/Modal/door.mp3'     // "Misi Berhasil!"
+  p2:'',
+  q0:'',        // setelah Tantangan 1
+  q1:'',        // setelah Tantangan 2
+  q2:'',        // setelah Tantangan 3
+  q3:'',        // setelah Tantangan 4
+  q4:'',        // setelah Tantangan 5
+  q5:'',        // setelah Tantangan 6
+  q6:'',        // setelah Tantangan 7
+  q7:'',        // setelah Tantangan 8
+  q8:'',        // setelah Tantangan 9
+  door:''     // "Misi Berhasil!"
 };
 let mSnd=null;const stopMSnd=()=>{if(mSnd){try{mSnd.pause()}catch(e){}mSnd=null}};
 function playMSnd(k){stopMSnd();if(muted)return;const u=MODAL_SND[k];if(!u){sfx('cp');return}
@@ -1017,7 +1017,7 @@ const CH='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" 
 const nav=()=>`<button class="nv" id="pv" aria-label="Kembali">${CH}</button><button class="nv r" id="nx" aria-label="Lanjut">${CH}</button>`;
 const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
 const P=[{k:'intro'},{k:'rules'},...[0,1,2,3].map(i=>({k:'pro',i})),...quizData.map((_,i)=>({k:'q',i})),{k:'door'},{k:'res'},{k:'end'}];
-const PRO=[['Pagi hari, kamu dan tim baru saja tiba di kantor untuk memulai kerja seperti biasa.'],['Sistem keamanan gedung tiba-tiba mengaktifkan mode uji coba mendadak dari pusat kendali, dan seluruh pintu langsung terkunci otomatis. Kamu dan tim pun terjebak di tengah aktivitas kerja.'],['Satu pesan muncul di layar terdekat:','OFFICE LOCKDOWN','"Selesaikan 9 tantangan yang tersebar di seluruh gedung untuk menemukan kunci terakhir menuju pintu keluar."'],['Bersiaplah menghadapi hari paling menegangkan di kantor!']];
+const PRO=[['Pagi hari, kamu dan tim baru saja tiba di kantor untuk memulai kerja seperti biasa.'],['Tiba-tiba sistem keamanan gedung mengalami gangguan yang menyebabkan alarm berbunyi dan pintu akses utama gedung terkunci otomatis. Kamu dan tim pun terjebak di tengah aktivitas kerja.'],['Satu pesan muncul di layar terdekat:','OFFICE LOCKDOWN','"Selesaikan 9 tantangan yang tersebar di seluruh gedung untuk menemukan akses menuju pintu keluar."'],['Bersiaplah menghadapi hari paling menegangkan di kantor!']];
 /* jam: prolog 08.00–08.30, tantangan 1–9 */
 /* nomor Prolog di header: PROLOG 1 s/d 4 */
 const PRO_NUM=[1,2,3,4],PRO_LBL=['Prolog 1','Prolog 2','Prolog 3','Prolog 4'];
@@ -1102,7 +1102,7 @@ function m(k,l,s){const fb=!s&&mmed(k)!=MEDIA[k]?MEDIA[k]:'';s=s||mmed(k);const 
 const prim=()=>{const s={};TR.forEach(t=>s[t]=0);A.forEach(t=>t&&s[t]++);return TR.slice().sort((a,b)=>s[b]-s[a])[0]};
 const V={
 intro:()=>`<div class="col"><h2 class="hi">Selamat Datang Summareconers!<br>Siap mengenal dirimu lebih jauh?</h2><div class="bub">Jalani satu shift penuh, hadapi berbagai situasi kerja, dan ambil keputusan berdasarkan caramu sendiri. Setiap pilihan akan membantumu mengenali karakter dan gaya kerjamu!</div><input id="nm" class="in" maxlength="40" autocomplete="off" placeholder="Tulis nama kamu di sini" value="${name}"><button class="go" id="gb">LANJUTKAN</button></div>`,
-rules:()=>`<div class="col"><div class="row"><div class="bub">Ada 9 tantangan yang akan kamu lewati, setiap tantangan, pilih 1 jawaban yang paling mewakili dirimu.</div><div class="ib">🚨</div></div><div class="row"><div class="ib">❗</div><div class="bub">Ingat, tidak ada pilihan yang salah. Setiap keputusan akan menuntunmu pada satu hasil akhir: Mascot C.A.R.I.N.G. mana yang paling mendominasi di dalam dirimu.</div></div><div class="row"><div class="bub">TEMUKAN KARAKTER C.A.R.I.N.G. YANG PALING KAMU!</div><div class="ib">❓</div></div></div>`,
+rules:()=>`<div class="col"><div class="row"><div class="bub">Ada 9 tantangan yang akan kamu lewati, setiap tantangan, pilih 1 jawaban yang paling mewakili dirimu.</div><div class="ib">🚨</div></div><div class="row"><div class="ib">❗</div><div class="bub">Ingat, tidak ada pilihan yang salah. Setiap keputusan akan menuntunmu pada satu hasil akhir: C.A.R.I.N.G. Guardian mana yang paling mendominasi di dalam dirimu.</div></div><div class="row"><div class="bub">TEMUKAN KARAKTER C.A.R.I.N.G. YANG PALING KAMU!</div><div class="ib">❓</div></div></div>`,
 pro:p=>`<div class="sp fill"><div class="med">${m('p'+p.i,'Ilustrasi '+PRO_LBL[p.i])}</div><div class="col g${PRO[p.i].length>2?' c3':''}">${p.i==3?`<div class="bub big"><div class="ib">⚠️</div><span>${PRO[3][0]}</span></div>`:PRO[p.i].map(t=>`<div class="bub big${t=='OFFICE LOCKDOWN'?' lkd':''}">${t}</div>`).join('')}${p.i==2?warnHTML():''}</div></div>`,
 q:p=>{if(p.i==3)return v4(p);if(p.i==5)return v6(p);const q=quizData[p.i];return `<div class="qg"><div class="lf"><div class="med">${m('q'+p.i,'Ilustrasi Tantangan '+(p.i+1))}</div><p class="sc">${q.text}</p></div><div class="rt"><h3>${q.q}</h3><div class="opts">${ord[p.i].map(t=>`<button class="op${A[p.i]==t?' sel':''}" data-t="${t}">${q.options.find(x=>x.trait==t).text}</button>`).join('')}</div></div></div>`},
 door:()=>`<div class="med dr">${m('door','Ilustrasi Pintu Keluar')}</div>`,
