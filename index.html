@@ -597,12 +597,12 @@ box-shadow:0 5px 0 #8F4510,0 0 0 5px rgba(255,255,255,.75),0 14px 32px rgba(20,1
 .op{min-height:0;overflow:hidden;padding:clamp(8px,1.7vh,16px) clamp(10px,1.3vw,18px);font-size:var(--ofs,clamp(12px,min(1.55vw,2.45vh),20px));line-height:1.34}
 }
 </style></head><body>
-<div id="ld" role="status" aria-live="polite"><div class="ldc"><img class="lg" src="logo.png" alt=""><div class="ldt">LOADING<span id="lddots">...</span></div><div class="lds" id="ldmsg">Menyiapkan ruangan, musik, dan ilustrasi. Tunggu sampai 100% ya biar mainnya mulus!</div><div class="ldg"><canvas id="ldgame" aria-label="Mini game: ketuk untuk terbang, hindari pipa"></canvas></div><div class="ldk" id="ldk"><i id="ldbar"></i><u style="left:0%"></u><u style="left:12.5%"></u><u style="left:25%"></u><u style="left:37.5%"></u><u style="left:50%"></u><u style="left:62.5%"></u><u style="left:75%"></u><u style="left:87.5%"></u><u style="left:100%"></u><img id="ldav" src="logo.png" alt=""></div><div class="ldp" id="ldpct">0%</div><div class="ldn" id="ldn">Memuat aset...</div><button class="go" id="ldgo">MULAI</button></div></div>
+<div id="ld" role="status" aria-live="polite"><div class="ldc"><img class="lg" src="assets/img/logo.png" alt=""><div class="ldt">LOADING<span id="lddots">...</span></div><div class="lds" id="ldmsg">Menyiapkan ruangan, musik, dan ilustrasi. Tunggu sampai 100% ya biar mainnya mulus!</div><div class="ldg"><canvas id="ldgame" aria-label="Mini game: ketuk untuk terbang, hindari pipa"></canvas></div><div class="ldk" id="ldk"><i id="ldbar"></i><u style="left:0%"></u><u style="left:12.5%"></u><u style="left:25%"></u><u style="left:37.5%"></u><u style="left:50%"></u><u style="left:62.5%"></u><u style="left:75%"></u><u style="left:87.5%"></u><u style="left:100%"></u><img id="ldav" src="assets/img/logo.png" alt=""></div><div class="ldp" id="ldpct">0%</div><div class="ldn" id="ldn">Memuat aset...</div><button class="go" id="ldgo">MULAI</button></div></div>
 
 <div class="sun" id="sun"></div>
 <main class="card" id="card">
 <div class="skyw"><i id="skysun"></i></div><div class="hero" id="hero"></div>
-<header class="bar"><img class="lg" src="logo.png" alt=""><div class="ttl"><div class="trow"><div><b id="t1"></b><span id="t2"></span></div><i class="clk" id="clk"></i></div><div class="trk" id="trk"><u style="left:0%"></u><u style="left:12.5%"></u><u style="left:25%"></u><u style="left:37.5%"></u><u style="left:50%"></u><u style="left:62.5%"></u><u style="left:75%"></u><u style="left:87.5%"></u><u style="left:100%"></u><img class="av" id="av" src="logo.png" alt=""></div></div>
+<header class="bar"><img class="lg" src="assets/img/logo.png" alt=""><div class="ttl"><div class="trow"><div><b id="t1"></b><span id="t2"></span></div><i class="clk" id="clk"></i></div><div class="trk" id="trk"><u style="left:0%"></u><u style="left:12.5%"></u><u style="left:25%"></u><u style="left:37.5%"></u><u style="left:50%"></u><u style="left:62.5%"></u><u style="left:75%"></u><u style="left:87.5%"></u><u style="left:100%"></u><img class="av" id="av" src="assets/img/logo.png" alt=""></div></div>
 <button class="rb" id="snd" aria-label="Suara"></button><button class="rb" id="set" aria-label="Pengaturan"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm8.4 5.3a8 8 0 000-3.6l2-1.6-2-3.4-2.4 1a8 8 0 00-3.1-1.8L14.500 2h-4l-.4 2.400A8 8 0 007 6.200l-2.400-1-2 3.400 2 1.600a8 8 0 000 3.600l-2 1.600 2 3.400 2.400-1a8 8 0 003.100 1.800l.4 2.400h4l.4-2.400a8 8 0 003.100-1.800l2.400 1 2-3.400z"/></svg></button></header>
 <div id="sp"><button class="go" id="rs2" style="font-size:16px;padding:10px 14px">ULANGI DARI AWAL</button></div>
 <div id="vp"><button class="mall" id="mall" role="switch" aria-checked="false"><span>MUTE ALL</span><i class="sw"></i></button>
@@ -766,27 +766,27 @@ const quizData = [
     ]}
 ];
 const characterData = {
-  'C': { name:'Commitment', short:'Komitmen', hex:'#C81E2E', img:'pala-merah.png', emoji:'🎖️', tags:['Bertanggung Jawab','Disiplin'],
+  'C': { name:'Commitment', short:'Komitmen', hex:'#C81E2E', img:'assets/img/characters/commitment.png', emoji:'🎖️', tags:['Bertanggung Jawab','Disiplin'],
     quote:"Setiap langkah besar dimulai dari komitmen kecil.",
     desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Commitment : Pribadi yang memiliki komitmen tinggi terhadap tujuan dan bertanggung jawab untuk menuntaskan setiap tantangan. Dengan ketekunan dan konsistensimu, kamu mampu menjaga tim tetap fokus hingga mencapai hasil terbaik.',
     toast:'Dicatat — kelar, nggak ada yang digantung.' },
-  'A': { name:'Agility', short:'Kelincahan', hex:'#E8681A', img:'Kuning.png', emoji:'⚡', tags:['Cepat','Adaptif'],
+  'A': { name:'Agility', short:'Kelincahan', hex:'#E8681A', img:'assets/img/characters/agility.png', emoji:'⚡', tags:['Cepat','Adaptif'],
     quote:"Kelincahan bukan hanya soal kecepatan, namun juga soal ketepatan.",
     desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Ace Agility: Pribadi yang mampu beradaptasi dengan cepat terhadap perubahan dan berani mencari solusi baru saat menghadapi tantangan. Dengan pola pikir yang fleksibel dan responsif, kamu mampu membantu tim menemukan cara terbaik untuk mencapai tujuan.',
     toast:'Dicatat — solusi alternatif langsung gas.' },
-  'R': { name:'Care', short:'Kepedulian', hex:'#D6247E', img:'Pink.png', emoji:'🤗', tags:['Empati','Kekeluargaan'],
+  'R': { name:'Care', short:'Kepedulian', hex:'#D6247E', img:'assets/img/characters/care.png', emoji:'🤗', tags:['Empati','Kekeluargaan'],
     quote:"Kepedulian yang tulus membentuk ruang dimana semua orang dapat tumbuh.",
     desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Rose Care: Pribadi yang peduli terhadap orang lain dan selalu siap memberikan perhatian serta dukungan kepada anggota tim. Dengan empati dan kepedulianmu, kamu menciptakan suasana kerja sama yang nyaman sehingga tim dapat menghadapi setiap tantangan bersama.',
     toast:'Dicatat — tim ngerasa diperhatiin.' },
-  'I': { name:'Integrity', short:'Integritas', hex:'#2360B4', img:'Biru.png', emoji:'⚖️', tags:['Kepercayaan','Adil'],
+  'I': { name:'Integrity', short:'Integritas', hex:'#2360B4', img:'assets/img/characters/integrity.png', emoji:'⚖️', tags:['Kepercayaan','Adil'],
     quote:"Kejujuran adalah pondasi dari segalanya.",
     desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Indy Integrity: Pribadi yang menjunjung tinggi kejujuran, tanggung jawab, dan konsistensi dalam setiap tindakan. Dengan berpegang teguh pada prinsip yang benar, kamu menjadi sosok yang dapat dipercaya dan membantu tim menyelesaikan tantangan dengan cara yang tepat.',
     toast:'Dicatat — sesuai jalur, aman ditelusuri.' },
-  'N': { name:'Collaboration', short:'Kolaborasi', hex:'#7B3AA0', img:'Ungu.png', emoji:'🤝', tags:['Kerja Tim','Kompak'],
+  'N': { name:'Collaboration', short:'Kolaborasi', hex:'#7B3AA0', img:'assets/img/characters/collaboration.png', emoji:'🤝', tags:['Kerja Tim','Kompak'],
     quote:"Bersama, kita bisa melakukan segalanya.",
     desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Nikola & Bora Collaboration: Pribadi yang percaya bahwa keberhasilan terbaik dicapai melalui kerja sama. Dengan kemampuanmu membangun komunikasi, saling mendukung, dan menyatukan kekuatan setiap anggota, kamu mampu membawa tim mencapai tujuan bersama.',
     toast:'Dicatat — kelar bareng-bareng.' },
-  'G': { name:'Gratitude', short:'Rasa Syukur', hex:'#188A4C', img:'Ijo.png', emoji:'🙏', tags:['Positif','Welas Asih'],
+  'G': { name:'Gratitude', short:'Rasa Syukur', hex:'#188A4C', img:'assets/img/characters/gratitude.png', emoji:'🙏', tags:['Positif','Welas Asih'],
     quote:"Semakin kita bersyukur, semakin kita tumbuh.",
     desc:'Kamu telah menunjukkan keenam karakter C.A.R.I.N.G selama menyelesaikan tantangan hari ini. Karakter yang paling menonjol dalam dirimu adalah Gibi Gratitude : Pribadi yang selalu menghargai setiap proses, usaha, dan kontribusi orang lain. Dengan sikap positif dan rasa syukur yang kamu tunjukkan, kamu mampu membangun semangat, mempererat hubungan dalam tim, serta menciptakan lingkungan yang saling menghargai.',
     toast:'Dicatat — suasana tetap adem.' }
@@ -800,23 +800,23 @@ const $=i=>document.getElementById(i),TR=['C','A','R','I','N','G'];
    Kosong ('') = tampil kotak putus-putus bertuliskan nomor ilustrasinya.
    ===================================================================== */
 const MEDIA={
-  intro:'gifDisclaimer.gif', // ILUSTRASI 1  | Intro            | .jpg/.gif/.webm | taro URL disini
-  rules:'gifProlog.gif', // ILUSTRASI 2  | Rules            | .jpg/.gif/.webm | taro URL disini
-  p0:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 1 Cut.webm',    // ILUSTRASI 3  | Prolog 1         | .jpg/.gif/.webm | taro URL disini
-  p1:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 2 Cut.webm',    // ILUSTRASI 4  | Prolog 2 - hal. 1 (1 bubble teks) | .jpg/.gif/.webm | taro URL disini
-  p2:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 3 Cut.webm',    // ILUSTRASI 5  | Prolog 2 - hal. 2 (2 bubble atas-bawah + KEY) | .jpg/.gif/.webm | taro URL disini
-  p3:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Prolog 4 Revisi.webm',    // ILUSTRASI 6  | Prolog 3         | .jpg/.gif/.webm | taro URL disini
-  q0:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (1).webm',    // ILUSTRASI 7  | Tantangan 1      | .jpg/.gif/.webm | taro URL disini
-  q1:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (2).webm',    // ILUSTRASI 8  | Tantangan 2      | .jpg/.gif/.webm | taro URL disini
-  q2:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (3).webm',    // ILUSTRASI 9  | Tantangan 3      | .jpg/.gif/.webm | taro URL disini
-  q3:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Soal 4 Revisi (Sfx).webm',    // ILUSTRASI 10 | Tantangan 4      | .jpg/.gif/.webm | taro URL disini
-  q4:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (5).webm',    // ILUSTRASI 11 | Tantangan 5      | .jpg/.gif/.webm | taro URL disini
+  intro:'assets/img/intro-disclaimer.gif', // ILUSTRASI 1  | Intro            | .jpg/.gif/.webm | taro URL disini
+  rules:'assets/img/intro-prolog.gif', // ILUSTRASI 2  | Rules            | .jpg/.gif/.webm | taro URL disini
+  p0:'assets/video/prolog-1.webm',    // ILUSTRASI 3  | Prolog 1         | .jpg/.gif/.webm | taro URL disini
+  p1:'assets/video/prolog-2.webm',    // ILUSTRASI 4  | Prolog 2 - hal. 1 (1 bubble teks) | .jpg/.gif/.webm | taro URL disini
+  p2:'assets/video/prolog-3.webm',    // ILUSTRASI 5  | Prolog 2 - hal. 2 (2 bubble atas-bawah + KEY) | .jpg/.gif/.webm | taro URL disini
+  p3:'assets/video/prolog-4.webm',    // ILUSTRASI 6  | Prolog 3         | .jpg/.gif/.webm | taro URL disini
+  q0:'assets/video/soal-1.webm',    // ILUSTRASI 7  | Tantangan 1      | .jpg/.gif/.webm | taro URL disini
+  q1:'assets/video/soal-2.webm',    // ILUSTRASI 8  | Tantangan 2      | .jpg/.gif/.webm | taro URL disini
+  q2:'assets/video/soal-3.webm',    // ILUSTRASI 9  | Tantangan 3      | .jpg/.gif/.webm | taro URL disini
+  q3:'assets/video/soal-4.webm',    // ILUSTRASI 10 | Tantangan 4      | .jpg/.gif/.webm | taro URL disini
+  q4:'assets/video/soal-5.webm',    // ILUSTRASI 11 | Tantangan 5      | .jpg/.gif/.webm | taro URL disini
   q5:'',    // ILUSTRASI 12 | Tantangan 6 | SEKARANG PAKAI 2 VIDEO + 6 IKON → isi di CR6 (cari 'TANTANGAN 6' di bawah)
-  q6:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Soal (7).webm',    // ILUSTRASI 13 | Tantangan 7      | .jpg/.gif/.webm | taro URL disini
-  q7:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Soal 8 Revisi.webm',    // ILUSTRASI 14 | Tantangan 8      | .jpg/.gif/.webm | taro URL disini
-  q8:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Soal 9 revisi.webm',    // ILUSTRASI 15 | Tantangan 9      | .jpg/.gif/.webm | taro URL disini
-  door:'asset/Personality Quiz/Versi Webm/REVISI SOUND/Revisi 2/Personality Quiz Ending Revisi.webm',   // ILUSTRASI 16 | Halaman pintu (setelah Tantangan 9) | taro URL disini
-  end:'asset/Personality Quiz/endingpage.jpeg',   // ILUSTRASI 17 | Halaman PENUTUP (full layar; ilustrasi 'Terima Kasih' + kontak) | .jpg/.png/.webp/.gif/.webm
+  q6:'assets/video/soal-7.webm',    // ILUSTRASI 13 | Tantangan 7      | .jpg/.gif/.webm | taro URL disini
+  q7:'assets/video/soal-8.webm',    // ILUSTRASI 14 | Tantangan 8      | .jpg/.gif/.webm | taro URL disini
+  q8:'assets/video/soal-9.webm',    // ILUSTRASI 15 | Tantangan 9      | .jpg/.gif/.webm | taro URL disini
+  door:'assets/video/ending.webm',   // ILUSTRASI 16 | Halaman pintu (setelah Tantangan 9) | taro URL disini
+  end:'assets/img/ending-page.jpeg',   // ILUSTRASI 17 | Halaman PENUTUP (full layar; ilustrasi 'Terima Kasih' + kontak) | .jpg/.png/.webp/.gif/.webm
   // --- IKON MODAL CHECKPOINT (kosong = pakai emoji bawaan) ---
   c0:'',    // IKON MODAL 1 | setelah Tantangan 1 | .png/.gif/.webm | taro URL disini
   c1:'',    // IKON MODAL 2 | setelah Tantangan 2 | taro URL disini
@@ -843,12 +843,12 @@ document.addEventListener('error',e=>{const v=e.target;if(v&&v.tagName=='VIDEO'&
    Kosong ('') = tampil kotak placeholder bertuliskan nomor posternya.
    ===================================================================== */
 const POSTER={
-  C:'bgmerah.gif', // POSTER 1 | Commitment    | taro URL disini
-  A:'bgkuning.gif', // POSTER 2 | Agility       | taro URL disini
-  R:'bgpink.gif', // POSTER 3 | Care          | taro URL disini
-  I:'bgbiru.gif', // POSTER 4 | Integrity     | taro URL disini
-  N:'bgungu.gif', // POSTER 5 | Collaboration | taro URL disini
-  G:'bghijau.gif'  // POSTER 6 | Gratitude     | taro URL disini
+  C:'assets/img/backgrounds/bg-merah.gif', // POSTER 1 | Commitment    | taro URL disini
+  A:'assets/img/backgrounds/bg-kuning.gif', // POSTER 2 | Agility       | taro URL disini
+  R:'assets/img/backgrounds/bg-pink.gif', // POSTER 3 | Care          | taro URL disini
+  I:'assets/img/backgrounds/bg-biru.gif', // POSTER 4 | Integrity     | taro URL disini
+  N:'assets/img/backgrounds/bg-ungu.gif', // POSTER 5 | Collaboration | taro URL disini
+  G:'assets/img/backgrounds/bg-hijau.gif'  // POSTER 6 | Gratitude     | taro URL disini
 };
 /* =====================================================================
    ASET "DOOR IS LOCKED!" (Prolog 2 hal. 2): pintu muncul -> bergetar (nyoba dibuka, nggak bisa) -> teks DOOR IS LOCKED.
@@ -944,9 +944,9 @@ function decodeGifLastFrame(buf){
    Kosong ('') = halaman itu tanpa suara.
    ===================================================================== */
 /* SATU file BGM untuk Prolog 1 s/d Tantangan 8 (ganti di sini saja; Tantangan 9 punya lagu sendiri di SND.q8) */
-const BGM_STORY='asset/Personality Quiz/Sound/prolog-8.mp3';
+const BGM_STORY='assets/audio/prolog-8.mp3';
 const SND={
-  intro:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3', // SOUND 1  | BGM Intro + Rules (SATU lagu untuk 2 halaman, lanjut tanpa putus/restart) | .mp3/.ogg | taro URL disini
+  intro:'assets/audio/quiz-time-nook.mp3', // SOUND 1  | BGM Intro + Rules (SATU lagu untuk 2 halaman, lanjut tanpa putus/restart) | .mp3/.ogg | taro URL disini
   p0:BGM_STORY,    // SOUND 3  | BGM Prolog 1     | taro URL disini
   p1:BGM_STORY,    // SOUND 4  | BGM Prolog 2 hal. 1 | taro URL disini
   p2:BGM_STORY,    // SOUND 5  | BGM Prolog 2 hal. 2 | taro URL disini
@@ -959,10 +959,10 @@ const SND={
   q5:BGM_STORY,    // SOUND 12 | BGM Tantangan 6  | taro URL disini
   q6:BGM_STORY,    // SOUND 13 | BGM Tantangan 7  | taro URL disini
   q7:BGM_STORY,    // SOUND 14 | BGM Tantangan 8  | taro URL disini
-  q8:'asset/Personality Quiz/Sound/9-end.mp3',    // SOUND 15 | BGM Tantangan 9  | taro URL disini
+  q8:'assets/audio/9-end.mp3',    // SOUND 15 | BGM Tantangan 9  | taro URL disini
   door:'',  // SOUND 16 | BGM Halaman pintu | taro URL disini
-  res:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3',   // SOUND 17 | BGM Halaman Hasil | taro URL disini
-  end:'asset/Personality Quiz/Sound/Quiz Time Nook.mp3',   // SOUND 17b | BGM Halaman Penutup | taro URL disini
+  res:'assets/audio/quiz-time-nook.mp3',   // SOUND 17 | BGM Halaman Hasil | taro URL disini
+  end:'assets/audio/quiz-time-nook.mp3',   // SOUND 17b | BGM Halaman Penutup | taro URL disini
   cp:'',    // SOUND 18 | SFX modal checkpoint (bunyi sekali tiap modal muncul) | taro URL disini
   click:'', // SOUND 19 | SFX klik tombol | taro URL disini (kosong = bunyi sintetis bawaan)
   hover:'', // SOUND 20 | SFX hover tombol/opsi | kosong = bunyi sintetis bawaan
@@ -994,7 +994,7 @@ const POPUP={
   q0:{show:true,title:'Tantangan 1 Terlewati',text:'Kamu berhasil mengambil langkah pertama di tengah situasi penuh tekanan. Tapi perjalanan belum selesai… Sebuah petunjuk baru menunggu untuk dipecahkan!',icon:'🔍',img:''},
   q1:{show:false,title:'Petunjuk Terbaca',text:'Petunjuk pertama berhasil kamu pecahkan. Tim mulai bergerak searah!',icon:'🧩',img:''},
   q2:{show:false,title:'Kunci Pertama!',text:'Tantangan berat berhasil dilewati. Satu kunci lagi sudah di tanganmu!',icon:'🗝️',img:''},
-  q3:{show:true,title:'Petunjuk Rumit Terpecahkan',text:'Kerja bagus! Kamu dan tim makin kompak. Satu langkah lagi menuju ruangan berikutnya.',icon:'🧩',img:'asset/Personality Quiz/pop up achievement(_)/interactive slide 2 (soal 5)/puzzle.svg'},
+  q3:{show:true,title:'Petunjuk Rumit Terpecahkan',text:'Kerja bagus! Kamu dan tim makin kompak. Satu langkah lagi menuju ruangan berikutnya.',icon:'🧩',img:'assets/img/puzzle.svg'},
   q4:{show:true,title:'Pintu Terbuka!',text:'Kerja bagus! Kamu berhasil menyusun potongan informasi yang saling berkaitan jadi satu kesimpulan. Satu langkah lagi menuju ruangan berikutnya.',icon:'🔓',img:'',lock:true},
   q5:{show:false,title:'Waktu Terus Berjalan',text:'Kamu tetap melangkah meski waktu makin menipis. Tinggal sedikit lagi!',icon:'⏳',img:''},
   q6:{show:false,title:'Keputusan Diambil!',text:'Kamu berhasil melewati momen menegangkan dengan caramu sendiri.',icon:'⚖️',img:''},
@@ -1008,7 +1008,7 @@ const POPUP={
    Kosong ('') / file belum ada = pakai SFX bawaan SND.cp.
    ===================================================================== */
 const MODAL_SND={
-  p3:'asset/Personality Quiz/Sound/Apakah kamu siap_.mp3',   // "Apakah Kamu Sudah Siap?"
+  p3:'assets/audio/apakah-kamu-siap.mp3',   // "Apakah Kamu Sudah Siap?"
   p2:'',
   q0:'',        // setelah Tantangan 1
   q1:'',        // setelah Tantangan 2
@@ -1125,12 +1125,12 @@ res:()=>{const t=prim(),c=characterData[t],src=POSTER[t],n=TR.indexOf(t)+1;retur
 
 /* ===== TANTANGAN 4: PAPAN PETUNJUK (full screen, zoom, explore) ===== */
 const CR4={
-  board:'Tantangan 4/Board full.svg',      // ← 🧩 taro path "Board full.svg" (1680x960)
-  kuncir:'Tantangan 4/Kuncir.svg',     // ← orang 1 (kiri)   Kuncir.svg
-  botak:'Tantangan 4/Botak.svg',      // ← orang 2          Botak.svg
-  gondrong:'Tantangan 4/Gondrong.svg',   // ← orang 3 (gemetar) Gondrong.svg
-  mc:'Tantangan 4/MC.svg',         // ← orang 4 (kanan)  MC.svg
-  notes:{C:'Tantangan 4/Captain Commitment.svg',A:'Tantangan 4/Ace Agility.svg',R:'Tantangan 4/Rose Care.svg',I:'Tantangan 4/Indy Integrity.svg',N:'Tantangan 4/NIkola Bora Collaboration.svg',G:'Tantangan 4/Gibi Gratitude.svg'},  // ← 6 sticky note jawaban, dipasang per TRAIT (bukan per posisi) supaya gambar selalu cocok dengan teks jawabannya
+  board:'assets/svg/tantangan-4/board-full.svg',      // ← 🧩 taro path "Board full.svg" (1680x960)
+  kuncir:'assets/svg/tantangan-4/kuncir.svg',     // ← orang 1 (kiri)   Kuncir.svg
+  botak:'assets/svg/tantangan-4/botak.svg',      // ← orang 2          Botak.svg
+  gondrong:'assets/svg/tantangan-4/gondrong.svg',   // ← orang 3 (gemetar) Gondrong.svg
+  mc:'assets/svg/tantangan-4/mc.svg',         // ← orang 4 (kanan)  MC.svg
+  notes:{C:'assets/svg/tantangan-4/note-commitment.svg',A:'assets/svg/tantangan-4/note-agility.svg',R:'assets/svg/tantangan-4/note-care.svg',I:'assets/svg/tantangan-4/note-integrity.svg',N:'assets/svg/tantangan-4/note-collaboration.svg',G:'assets/svg/tantangan-4/note-gratitude.svg'},  // ← 6 sticky note jawaban, dipasang per TRAIT (bukan per posisi) supaya gambar selalu cocok dengan teks jawabannya
   hand:''        // ← (opsional) svg tangan menunjuk; kosong = emoji 👆
 };
 /* posisi 6 sticky note di atas kertas kosong (koordinat board 1680x960): [x tengah, y tengah, lebar, rotasi] */
@@ -1228,17 +1228,17 @@ say(sel());view();$('hl4').addEventListener('pointerdown',hlOff);el.addEventList
 
 /* ===== TANTANGAN 6: VIDEO 1 → VIDEO 2 (loop) → 6 IKON JAWABAN ===== */
 const CR6={
-  v1:'Tantangan 6/Soal 6 Revisi Pc Part 1.webm',   // ← 🎬 VIDEO 1 (.webm/.mp4): penjelasan soal. Ada tombol PLAY, main sekali, selesai → langsung CUT ke VIDEO 2
-  v2:'Tantangan 6/Soal 6 Revisi Pc Part 2.webm',   // ← 🔁 VIDEO 2 (.webm/.mp4): soal, SELALU LOOP. BGM baru fade-in saat video ini mulai jalan
-  v1m:'Tantangan 6/Soal 6 Revisi Mobile Part 1.webm',   // ← 📱 VIDEO 1 versi MOBILE (HP / layar <=820px). Kosong ('') = pakai versi desktop
-  v2m:'Tantangan 6/Soal 6 Revisi Mobile Part 2.webm',   // ← 📱 VIDEO 2 versi MOBILE (loop). Kosong ('') = pakai versi desktop. Kalau file mobile belum ada/gagal dimuat, otomatis balik ke versi desktop
+  v1:'assets/video/soal-6-pc-part-1.webm',   // ← 🎬 VIDEO 1 (.webm/.mp4): penjelasan soal. Ada tombol PLAY, main sekali, selesai → langsung CUT ke VIDEO 2
+  v2:'assets/video/soal-6-pc-part-2.webm',   // ← 🔁 VIDEO 2 (.webm/.mp4): soal, SELALU LOOP. BGM baru fade-in saat video ini mulai jalan
+  v1m:'assets/video/soal-6-mobile-part-1.webm',   // ← 📱 VIDEO 1 versi MOBILE (HP / layar <=820px). Kosong ('') = pakai versi desktop
+  v2m:'assets/video/soal-6-mobile-part-2.webm',   // ← 📱 VIDEO 2 versi MOBILE (loop). Kosong ('') = pakai versi desktop. Kalau file mobile belum ada/gagal dimuat, otomatis balik ke versi desktop
   icons:{   // ← 🧩 6 ikon jawaban (.svg/.png), TERIKAT ke trait jawabannya: C=Commitment, A=Agility, R=Care, I=Integrity, N=Collaboration, G=Gratitude (ikut jawaban, bukan urutan). Kosong = placeholder
-    C:'Tantangan 6/Commitment.svg',
-    A:'Tantangan 6/Agility.svg',
-    R:'Tantangan 6/Care.svg',
-    I:'Tantangan 6/Integrity.svg',
-    N:'Tantangan 6/Collaboration.svg',
-    G:'Tantangan 6/Gratitude.svg'
+    C:'assets/svg/tantangan-6/icon-commitment.svg',
+    A:'assets/svg/tantangan-6/icon-agility.svg',
+    R:'assets/svg/tantangan-6/icon-care.svg',
+    I:'assets/svg/tantangan-6/icon-integrity.svg',
+    N:'assets/svg/tantangan-6/icon-collaboration.svg',
+    G:'assets/svg/tantangan-6/icon-gratitude.svg'
   }
 };
 let t6seen=0;   /* sudah pernah nonton Video 1 sampai habis? kalau sudah, balik ke halaman ini langsung ke Video 2 + ikon (masih bisa "Ulangi Video") */
@@ -1696,7 +1696,7 @@ setM(muted);
 const LD_TIMEOUT=30000,IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
 /* ASET WAJIB (ditunggu sebelum tombol MULAI): logo, intro, rules, prolog + musik awal. Sisanya dimuat DIAM-DIAM di background sesuai urutan halaman. */
 const all=new Set(),add=s=>{if(s&&typeof s==='string')all.add(s)};
-add('logo.png');['intro','rules','p0','p1','p2','p3'].forEach(k=>add(mmed(k)));add(SND.intro);add(BGM_STORY);add(BGM_MAIN);
+add('assets/img/logo.png');['intro','rules','p0','p1','p2','p3'].forEach(k=>add(mmed(k)));add(SND.intro);add(BGM_STORY);add(BGM_MAIN);
 const nCrit=all.size;
 add(MODAL_SND.p3);
 for(let i=0;i<9;i++){const k='q'+i;if(i==5){add(t6src(CR6.v1,CR6.v1m));add(t6src(CR6.v2,CR6.v2m));Object.values(CR6.icons).forEach(add)}else add(mmed(k));add(MODAL_SND[k])}
